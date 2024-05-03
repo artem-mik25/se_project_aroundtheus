@@ -1,51 +1,89 @@
 .profile {
-    display: flex;
-  }
-  
-  .profile__info {
-    display: grid;
-    grid-template-areas:
-    "title button"
+  display: flex;
+  padding-top: 40px;
+  margin-bottom: 51px;
+  align-items: center;
+}
+
+.profile__info {
+  display: grid;
+  grid-template-columns: minmax(auto, 373px) auto;
+  grid-template-areas: 
+    "title button" 
     "description description";
-    grid-template-columns: minmax(auto,373px) auto;
-  }
-  
-  .profile__edit-button {
-      background: transparent url(../images/Edit\ Button.svg) no-repeat center;
-      height: 24px;
-      width: 24px;
-      grid-area: button;
-  }
-  
-  .profile__add-button {
-      background: transparent url(../images/Add\ Button.svg) no-repeat center;
-      height: 50px;
-      width: 150px;
-      margin-left: auto;
-  
-  }
-  
-  .profile__title {
-      font-size: 42px;
-      line-height: 48px;
-      font-weight: 500;
-      grid-area: title;
-      margin: 0%;
-  }
-  
-  .profile__description {
-      font-size: 18px;
-      line-height: 22px;
-      font-weight: 400;
-      grid-area: description;
-      margin: 0%;
-  }
-  
-  .profile__image {
-  height: 120px;
+  align-items: center;
+  gap: 16px 18px;
+}
+
+.profile__image {
   width: 120px;
-  border-radius: 50%;
-  object-fit: cover;
+  height: 120px;
   background-position: center;
+  object-fit: cover;
+  border-radius: 50%;
   margin-right: 24px;
+}
+
+.profile__title {
+  grid-area: title;
+  width: 380px;
+  margin: 0;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 48px;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profile__edit-button {
+  grid-area: button;
+  width: 24px;
+  height: 24px;
+  background: transparent url(../images/Edit\ Button.svg) center no-repeat;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
+}
+
+.profile__description {
+  grid-area: description;
+  max-width: 415px;
+  margin: 0;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  line-height: normal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profile__add-button {
+  width: 150px;
+  height: 50px;
+  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  margin-left: auto;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 900px) {
+  .profile {
+    /* Custom styles for smaller screens can be added here if needed */
   }
+}

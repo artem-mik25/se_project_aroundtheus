@@ -1,4 +1,22 @@
-.cards {
-    margin-top: 30px
-    /* fonts */
-}
+ .cards {
+        font-family: "Inter", Arial, sans-serif;
+        font-weight: 900;
+        line-height: normal;
+        color: black;
+      }
+      
+      .cards__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 282px);
+        grid-gap: 20px 17px;
+        justify-content: center;
+        padding: 51px 0 67px 0;
+        margin: 0;
+      }
+      
+      @media screen and (max-width: 680px) {
+        .cards__list {
+          padding: 36px 0 48px 0;
+        }
+      }
+      

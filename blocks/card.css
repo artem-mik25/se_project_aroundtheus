@@ -1,8 +1,14 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  list-style: none;
+  width: 100%;
+  max-width: 880px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
+
 
 .card__list {
   display: grid;
@@ -14,20 +20,30 @@
 }
 
 .card__image {
-  width: 282px;
   height: 282px;
+  width: 282px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .card__description {
+  padding: 25px 20px;
   display: flex;
-  background-color: white;
-  color: black;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-  padding-right: 20px;
   justify-content: space-between;
   align-items: center;
+}
+
+.card__title {
+  color: black;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 28px;
+  max-width: 219px;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .card__like-button {
@@ -35,5 +51,11 @@
    height: 18px;
    width: 20px;
    border: none;
+   transition: opacity 0.2s linear;
    cursor: pointer;
    }
+
+   .card__like-button:hover {
+    opacity: 0.5;
+  }
+  

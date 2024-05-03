@@ -1,4 +1,11 @@
-.header { 
-    margin-top: 45px;
- 
+.header {
+  margin-top: 45px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  padding-bottom: 41px;
+  max-width: 880px;
+}
+
+.header__image {
+  width: 168.75px;
+  height: 127.5px;
 }
