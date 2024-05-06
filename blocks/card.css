@@ -45,7 +45,7 @@
 }
 
 .card__like-button {
-  background: transparent url('../images/Like-inactive.svg') no-repeat center;
+  background: transparent url(../images/Like.svg) no-repeat center;
   width: 20px;
   height: 18px;
   border: none;
