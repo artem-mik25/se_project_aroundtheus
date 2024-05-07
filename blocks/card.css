@@ -8,20 +8,11 @@
   overflow: hidden;
 }
 
-.card__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 282px);
-  grid-gap: 20px 17px;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-
 .card__image {
   width: 282px;
   height: 282px;
   object-fit: cover;
-  border-radius: 10px 10px 0 0;
+  
 }
 
 .card__description {
@@ -57,14 +48,4 @@
   opacity: 0.5;
 }
 
-@media screen and (max-width: 680px) {
-  .page__content {
-    max-width: 100%;
-  }
-}
 
-@media screen and (max-width: 320px) {
-  .page__content {
-    max-width: 100%;
-  }
-}

@@ -6,16 +6,16 @@
 }
 
 .footer__copyright {
-  width: 282px;
   margin: 0;
   padding: 0;
   color: #545454;
   font-size: 18px;
   line-height: 21.78px;
   font-weight: 400;
+  
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
   .footer {
     padding: 0 19px 36px;
   }

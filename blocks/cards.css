@@ -10,12 +10,13 @@
   grid-template-columns: repeat(auto-fill, 282px);
   grid-gap: 20px 17px;
   justify-content: center;
-  padding: 51px 0 67px;
+  padding: 0px 0 67px;
   margin: 0;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
   .cards__list {
-    padding: 36px 0 48px;
+    padding: 0px 0 56px;
   }
 }
+

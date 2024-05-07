@@ -8,7 +8,7 @@
   
 **Intro**
   
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
+I've developed a website that allows users to create profiles and share images, which can be viewed and liked by others. This project was constructed using HTML and CSS, incorporating media queries to ensure the site is responsive across various screen sizes.
   
 **Figma**  
   

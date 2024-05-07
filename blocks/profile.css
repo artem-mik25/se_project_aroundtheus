@@ -40,6 +40,9 @@
   font-weight: 500;
   line-height: 1.1;
   margin-bottom: 14px;
+  max-width: 200px;
+  margin-top: 0%;
+  
 }
 
 .profile__description {
@@ -54,16 +57,16 @@
 
 .profile__edit-button, .profile__add-button {
   background: transparent;
-  border-radius: 2px;
+  
   cursor: pointer;
   transition: opacity 0.2s linear;
 }
 
 .profile__edit-button {
   grid-area: button;
-  width: 24px;
-  height: 24px;
-  background-image: url('../images/Edit Button.svg');
+  width: 18px;
+  height: 18px;
+  background-image: url('../images/pen.svg');
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #fff;
@@ -84,7 +87,7 @@
   border: 2px solid #fff;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 800px) {
   .profile {
     flex-direction: row;
   }
@@ -96,14 +99,18 @@
   .profile__title {
     font-size: 42px;
     margin-bottom: 7px;
+    max-width: 450px;
   }
 
   .profile__edit-button {
-    margin-left: 18px;
+    margin-left: 16px;
+    height: 24px;
+    width: 24px;
   }
 
   .profile__image {
     margin-right: 24px;
+    margin-bottom: 0;
   }
 
   .profile__add-button {
