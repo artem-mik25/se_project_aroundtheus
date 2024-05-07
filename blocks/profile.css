@@ -47,17 +47,16 @@
 
 .profile__description {
   grid-area: description;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
   line-height: normal;
-  max-width: 415px;
+  max-width: 320px;
   margin: 0;
   text-align: center;
 }
 
 .profile__edit-button, .profile__add-button {
   background: transparent;
-  
   cursor: pointer;
   transition: opacity 0.2s linear;
 }
@@ -85,6 +84,7 @@
   background-repeat: no-repeat;
   background-position: center;
   border: 2px solid #fff;
+  border-radius: 2px;
 }
 
 @media screen and (min-width: 800px) {
