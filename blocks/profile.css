@@ -50,7 +50,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
-  max-width: 320px;
+  max-width: 300px;
   margin: 0;
   text-align: center;
 }
@@ -127,5 +127,6 @@
 
   .profile__description {
     text-align: left;
+    font-style: 18px;
   }
 }
