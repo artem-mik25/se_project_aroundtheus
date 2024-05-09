@@ -21,7 +21,7 @@ The way you'll do this at work is by exporting images directly from Figma — we
 Good luck and have fun!
 
 Github Pages: 
-https://github.com/artem-mik25/se_project_aroundtheus/
+https://artem-mik25.github.io/se_project_aroundtheus/
 
 Link to video: 
 https://drive.google.com/file/d/1nPQBgGPTeDUm5GJvWHspsW5Z42Kml2XO/view?usp=sharing
