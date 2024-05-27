@@ -8,6 +8,7 @@
     <meta content="Travel, America, Figma, CSS, HTML" name="keywords" />
     <title>Around The U.S.</title>
     <link href="./pages/index.css" rel="stylesheet" />
+    <link href="./styles/modal.css" rel="stylesheet" />
     <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body class="page">
@@ -109,6 +110,30 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2024 Around The U.S.</p>
       </footer>
+    </div>
+
+    <div class="modal modal_opened" id="profile-edit-modal">
+      <div class="modal__container">
+        <button class="modal__close"></button>
+        <h2 class="modal__title">Edit profile</h2>
+        <form class="modal__form">
+          <input
+            type="text"
+            class="modal__input"
+            name="name"
+            id="name"
+            placeholder="Name"
+          />
+          <input
+            type="text"
+            class="modal__input"
+            name="description"
+            id="description"
+            placeholder="Description"
+          />
+          <button class="modal__save" type="submit">Save</button>
+        </form>
+      </div>
     </div>
     <script src="./scripts/index.js"></script>
   </body>
