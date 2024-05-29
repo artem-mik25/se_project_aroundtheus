@@ -9,6 +9,7 @@
     <title>Around The U.S.</title>
     <link href="./pages/index.css" rel="stylesheet" />
     <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="./styles/modal.css" rel="stylesheet" />
   </head>
   <body class="page">
     <div class="page__content">
@@ -29,7 +30,7 @@
           <div class="profile__info">
             <div class="profile__main">
               <h1 class="profile__title">Jacques Cousteau</h1>
-              <button class="profile__edit-button" type="button"></button>
+              <button id="profile__edit-button" class="profile__edit-button" type="button"></button>
             </div>
             <p class="profile__description">Explorer</p>
           </div>
@@ -111,7 +112,7 @@
       </footer>
     </div>
 
-    <div class="modal modal_opened" id="profile-edit-modal">
+    <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close"></button>
         <h2 class="modal__title">Edit profile</h2>

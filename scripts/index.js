@@ -1,4 +1,5 @@
-const initialCards = [
+document.addEventListener('DOMContentLoaded', () => {
+  const initialCards = [
     {
       name: "Yosemite Valley",
       link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -24,6 +25,18 @@ const initialCards = [
       link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
     },
   ];
-   
+
   console.log(initialCards);
-  
+
+  const profileEditButton = document.querySelector("#profile__edit-button");
+  const profileEditModal = document.querySelector("#profile-edit-modal");
+  const closeModalButton = document.querySelector(".modal__close");
+
+  profileEditButton.addEventListener("click", () => {
+    profileEditModal.classList.add("modal_opened");
+  });
+
+  closeModalButton.addEventListener("click", () => {
+    profileEditModal.classList.remove("modal_opened");
+  });
+});
