@@ -21,11 +21,11 @@
           <div class="profile__info">
             <div class="profile__main">
               <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
-              <button id="profile-edit-button" class="profile__edit-button" type="button"></button>
+              <button id="profile__edit-button" class="profile__edit-button" type="button"></button>
             </div>
             <p class="profile__description" id="profile-description">Explorer</p>
           </div>
-          <button class="profile__add-button" id="add-card-button" type="button"></button>
+          <button class="profile__add-button" id="profile-add-button" type="button"></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list" id="cards-list">
@@ -46,7 +46,6 @@
           <h2 class="card__title"></h2>
           <button class="card__like-button" type="button"></button>
         </div>
-        <button class="card__delete-button" type="button"></button>
       </li>
     </template>
 
@@ -56,46 +55,34 @@
         <button class="modal__close" id="modal-edit-close"></button>
         <h2 class="modal__heading">Edit profile</h2>
         <form class="modal__form" id="profile-edit-form">
-          <input class="modal__input" 
-            type="text" 
-            name="title" 
-            placeholder="Name" 
-            id="profile-title-input" 
-            value="Jacques Cousteau" />
-          
-          <input class="modal__input" 
-            type="text" 
-            name="description" 
-            placeholder="Description" 
-            id="profile-description-input" 
-            value="Explorer" />
+          <input class="modal__input" type="text" name="title" placeholder="Name" id="profile-title-input" value="Jacques Cousteau" />
+          <input class="modal__input" type="text" name="description" placeholder="Description" id="profile-description-input" value="Explorer" />
           <button class="modal__button" type="submit">Save</button>
         </form>
       </div>
     </div>
 
-    <!-- New Place Modal -->
-    <div class="modal" id="new-place-modal">
+    <!-- Add Place Modal -->
+    <div class="modal" id="add-place-modal">
       <div class="modal__container">
-        <button class="modal__close" id="modal-new-place-close"></button>
+        <button class="modal__close" id="modal-add-close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__form" id="new-place-form">
-          <input class="modal__input" type="text" name="title" placeholder="Title" id="new-place-title-input" required />
-          <input class="modal__input" type="url" name="image-url" placeholder="Image URL" id="new-place-url-input" required />
+        <form class="modal__form" id="add-place-form">
+          <input class="modal__input" type="text" name="title" placeholder="Title" id="place-title-input" required />
+          <input class="modal__input" type="url" name="image" placeholder="Image URL" id="place-image-input" required />
           <button class="modal__button" type="submit">Create</button>
         </form>
       </div>
     </div>
 
-    <!-- Preview Modal -->
-    <div class="modal" id="preview-modal">
-      <div class="modal__container">
-        <button class="modal__close" id="preview-close-modal"></button>
-        <img class="modal__image" id="preview-image-modal" />
-        <h3 class="modal__title" id="preview-title-modal"></h3>
+    <!-- Image Preview Modal -->
+    <div class="modal" id="image-preview-modal">
+      <div class="modal__container modal__container--preview">
+        <button class="modal__close" id="modal-preview-close"></button>
+        <img class="modal__image" id="image-preview" src="" alt="Preview Image" />
       </div>
     </div>
 
-    <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
