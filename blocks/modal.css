@@ -107,3 +107,13 @@
 .modal__button:hover {
   opacity: 0.8;
 }
+
+.modal__container--preview {
+  width: auto;
+  height: auto;
+}
+
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+}
