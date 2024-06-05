@@ -26,8 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ];
 
-  console.log(initialCards);
-
   const profileEditButton = document.querySelector("#profile__edit-button");
   const profileEditModal = document.querySelector("#profile-edit-modal");
   const closeModalButton = document.querySelector("#modal-edit-close");
@@ -49,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const imagePreviewModal = document.querySelector("#image-preview-modal");
   const modalPreviewClose = document.querySelector("#modal-preview-close");
   const imagePreview = document.querySelector("#image-preview");
+  const imageCaption = document.querySelector("#image-caption");
 
   // Profile Edit Modal Handlers
   profileEditButton.addEventListener("click", () => {
@@ -93,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector(".card__image");
     const cardTitle = cardElement.querySelector(".card__title");
+    const cardLikeButton = cardElement.querySelector(".card__like-button");
+    const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
     cardImage.src = data.link;
     cardImage.alt = data.name;
@@ -101,7 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
     cardImage.addEventListener("click", () => {
       imagePreview.src = data.link;
       imagePreview.alt = data.name;
+      imageCaption.textContent = data.name;
       imagePreviewModal.classList.add("modal_opened");
+    });
+
+    cardLikeButton.addEventListener("click", () => {
+      cardLikeButton.classList.toggle("liked");
+    });
+
+    cardDeleteButton.addEventListener("click", () => {
+      cardElement.remove();
     });
 
     return cardElement;
@@ -115,5 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Image Preview Modal Handler
   modalPreviewClose.addEventListener("click", () => {
     imagePreviewModal.classList.remove("modal_opened");
+  });
+
+  // Event delegation to handle dynamically added delete buttons
+  cardListEl.addEventListener('click', (event) => {
+    if (event.target.classList.contains('card__delete-button')) {
+      const cardElement = event.target.closest('.card');
+      cardElement.remove();
+    }
   });
 });
