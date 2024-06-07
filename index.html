@@ -1,90 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Around The US" />
-  <meta name="author" content="Artem Mikhaylov" />
-  <meta name="keywords" content="Travel, America, Figma, CSS, HTML" />
-  <title>Around The U.S.</title>
-  <link href="./pages/index.css" rel="stylesheet" />
-  <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
-</head>
-<body class="page">
-  <div class="page__content">
-    <header class="header page__section">
-      <img alt="Around the US logo" class="header__image" src="./images/AroundTheUS.svg" />
-    </header>
-    <main class="content">
-      <section class="profile page__section">
-        <img alt="Profile Picture" class="profile__image" src="./images/jacques-cousteau.jpg" />
-        <div class="profile__info">
-          <div class="profile__main">
-            <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
-            <button id="profile__edit-button" class="profile__edit-button" type="button"></button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Around The US" />
+    <meta name="author" content="Artem Mikhaylov" />
+    <meta name="keywords" content="Travel, America, Figma, CSS, HTML" />
+    <title>Around The U.S.</title>
+    <link href="./pages/index.css" rel="stylesheet" />
+    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  </head>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img alt="Around the US logo" class="header__image" src="./images/AroundTheUS.svg" />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <img alt="Profile Picture" class="profile__image" src="./images/jacques-cousteau.jpg" />
+          <div class="profile__info">
+            <div class="profile__main">
+              <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
+              <button id="profile__edit-button" class="profile__edit-button" type="button"></button>
+            </div>
+            <p class="profile__description" id="profile-description">Explorer</p>
           </div>
-          <p class="profile__description" id="profile-description">Explorer</p>
+          <button class="profile__add-button" id="profile-add-button" type="button"></button>
+        </section>
+        <section class="cards page__section">
+          <ul class="cards__list" id="cards-list">
+            <!-- Cards will be dynamically inserted here -->
+          </ul>
+        </section>
+      </main>
+      <footer class="footer page__section">
+        <p class="footer__copyright">© 2024 Around The U.S.</p>
+      </footer>
+    </div>
+
+    <!-- Card Template -->
+    <template id="card-template">
+      <li class="card">
+        <img class="card__image" src="" alt="" />
+        <div class="card__description">
+          <h2 class="card__title"></h2>
+          <button class="card__like-button" type="button"></button>
+          <button class="card__delete-button" type="button"></button>
         </div>
-        <button class="profile__add-button" id="profile-add-button" type="button"></button>
-      </section>
-      <section class="cards page__section">
-        <ul class="cards__list" id="cards-list">
-          <!-- Cards will be dynamically inserted here -->
-        </ul>
-      </section>
-    </main>
-    <footer class="footer page__section">
-      <p class="footer__copyright">© 2024 Around The U.S.</p>
-    </footer>
-  </div>
+      </li>
+    </template>
 
-  <!-- Card Template -->
-  <template id="card-template">
-    <li class="card">
-      <img class="card__image" src="" alt="" />
-      <div class="card__description">
-        <h2 class="card__title"></h2>
-        <button class="card__like-button" type="button"></button>
-        <button class="card__delete-button" type="button"></button>
+    <!-- Profile Edit Modal -->
+    <div class="modal" id="profile-edit-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="modal-edit-close"></button>
+        <h2 class="modal__heading">Edit profile</h2>
+        <form class="modal__form" id="profile-edit-form">
+          <input class="modal__input" type="text" name="title" placeholder="Name" id="profile-title-input" value="Jacques Cousteau" />
+          <input class="modal__input" type="text" name="description" placeholder="Description" id="profile-description-input" value="Explorer" />
+          <button class="modal__button" type="submit">Save</button>
+        </form>
       </div>
-    </li>
-  </template>
-
-  <!-- Profile Edit Modal -->
-  <div class="modal" id="profile-edit-modal">
-    <div class="modal__container">
-      <button class="modal__close" id="modal-edit-close"></button>
-      <h2 class="modal__heading">Edit profile</h2>
-      <form class="modal__form" id="profile-edit-form">
-        <input class="modal__input" type="text" name="title" placeholder="Name" id="profile-title-input" value="Jacques Cousteau" />
-        <input class="modal__input" type="text" name="description" placeholder="Description" id="profile-description-input" value="Explorer" />
-        <button class="modal__button" type="submit">Save</button>
-      </form>
     </div>
-  </div>
 
-  <!-- Add Place Modal -->
-  <div class="modal" id="add-place-modal">
-    <div class="modal__container">
-      <button class="modal__close" id="modal-add-close"></button>
-      <h2 class="modal__heading">New Place</h2>
-      <form class="modal__form" id="add-place-form">
-        <input class="modal__input" type="text" name="title" placeholder="Title" id="place-title-input" required />
-        <input class="modal__input" type="url" name="image" placeholder="Image URL" id="place-image-input" required />
-        <button class="modal__button" type="submit">Create</button>
-      </form>
+    <!-- Add Place Modal -->
+    <div class="modal" id="add-place-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="modal-add-close"></button>
+        <h2 class="modal__heading">New Place</h2>
+        <form class="modal__form" id="add-place-form">
+          <input class="modal__input" type="text" name="title" placeholder="Title" id="place-title-input" required />
+          <input class="modal__input" type="url" name="image" placeholder="Image URL" id="place-image-input" required />
+          <button class="modal__button" type="submit">Create</button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <!-- Image Preview Modal -->
-  <div class="modal" id="image-preview-modal">
-    <div class="modal__container modal__container--preview">
-      <button class="modal__close" id="modal-preview-close"></button>
-      <img class="modal__image" id="image-preview" src="" alt="Preview Image" />
-      <p class="modal__caption" id="image-caption"></p>
+    <!-- Image Preview Modal -->
+    <div class="modal" id="image-preview-modal">
+      <div class="modal__container modal__container--preview">
+        <button class="modal__close modal-preview__close" id="modal-preview-close"></button>
+        <img class="modal__image" id="image-preview" src="" alt="Preview Image" />
+        <p class="modal__caption modal-preview__title" id="image-caption"></p>
+      </div>
     </div>
-  </div>
 
-  <script src="./scripts/index.js"></script>
-</body>
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
