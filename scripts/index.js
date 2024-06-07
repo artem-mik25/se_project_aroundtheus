@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link: placeImageInput.value,
     };
     const cardElement = getCardElement(newCard);
-    cardListEl.prepend(cardElement); // Add the new card to the beginning
+    cardListEl.prepend(cardElement); 
     addPlaceModal.classList.remove("modal_opened");
     addPlaceForm.reset();
   });
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     cardDeleteButton.addEventListener("click", () => {
-      cardElement.remove();
+      cardElement.closest('.card').remove();
     });
 
     return cardElement;
