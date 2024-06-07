@@ -1,4 +1,4 @@
- /* Global styles */
+/* Global styles */
 body {
   font-family: 'Inter', Arial, sans-serif;
 }
@@ -165,15 +165,15 @@ body {
 
 .modal__caption {
   font-family: "Inter", Arial, sans-serif;
-  font-size: 14px;
-  margin: 0 0 30px;
-  display: flex;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  margin: 0;
   position: absolute;
-  bottom: -60px; 
-  left: 20px;
+  bottom: -20px; /* Ensure this is set to -20px as required */
+  left: -1px; /* Adjust left position as required */
   color: #fff;
-  font-size: 16px;
-  width: 290px;
+  max-width: 291px;
 }
 
 /* Delete Button */
@@ -251,4 +251,50 @@ body {
 
 .card__like-button.liked {
   background-image: url(../images/like-active.svg);
+}
+
+/* Responsive Styles */
+@media (max-width: 320px) {
+  .modal__container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal__heading {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .modal__input {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .modal__button {
+    font-size: 16px;
+    height: 45px;
+    margin-top: 30px;
+  }
+
+  .modal__caption {
+    font-size: 12px;
+    width: auto;
+    max-width: 291px;
+    left: -1px; /* Adjust left position as required */
+    bottom: -20px; /* Ensure this is set to -20px as required */
+    line-height: 14.52px;
+  }
+
+  .modal__close,
+  .modal-preview__close {
+    top: -30px;
+    right: -30px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .modal__image {
+    max-width: 90vw;
+    max-height: 50vh;
+  }
 }
