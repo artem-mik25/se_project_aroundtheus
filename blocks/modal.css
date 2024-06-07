@@ -1,4 +1,4 @@
-/* Global styles */
+ /* Global styles */
 body {
   font-family: 'Inter', Arial, sans-serif;
 }
@@ -48,25 +48,9 @@ body {
   border-radius: 10px;
   position: relative;
   width: 430px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
-.modal__container--preview {
-  width: auto;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  padding: 0;
-  margin: 0;
-}
-
-.modal__close,
-.modal-preview__close {
+.modal__close {
   background-image: url(../images/Closer\ Icon.svg);
   background-color: transparent;
   background-repeat: no-repeat;
@@ -81,8 +65,7 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.modal__close:hover,
-.modal-preview__close:hover {
+.modal__close:hover {
   opacity: 0.8;
   cursor: pointer;
 }
@@ -142,30 +125,78 @@ body {
   opacity: 0.8;
 }
 
-.modal__image {
+/* Image Preview Modal */
+.modal__container--preview {
+  width: auto;
+  height: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-preview__close {
+  background-image: url(../images/Closer\ Icon.svg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: -45px;
+  right: -45px;
+  height: 40px;
+  width: 40px;
+  border: none;
+  padding: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-preview__close:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.modal__image {
   max-width: 75vw;
   max-height: 75vh;
 }
 
 .modal__caption {
   font-family: "Inter", Arial, sans-serif;
-  font-size: 12px;
-  line-height: 14.52px;
-  font: weight 400;
+  font-size: 14px;
+  margin: 0 0 30px;
   display: flex;
   position: absolute;
-  bottom: -50px;
-  margin: 10px 0 0 0;
+  bottom: -60px; 
   left: 20px;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   width: 290px;
 }
 
-/* Card styles */
+/* Delete Button */
+.card__delete-button {
+  background-color: transparent;
+  background-image: url(../images/delete-button.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 24px;
+  width: 24px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card__delete-button:hover {
+  opacity: 0.7;
+}
+
+/* Card Styles */
 .card {
   position: relative;
   display: flex;
@@ -177,7 +208,7 @@ body {
 }
 
 .card__image {
-  width: 100%;
+  width: 282px;
   height: 282px;
   object-fit: cover;
 }
@@ -220,23 +251,4 @@ body {
 
 .card__like-button.liked {
   background-image: url(../images/like-active.svg);
-}
-
-.card__delete-button {
-  background-color: transparent;
-  background-image: url(../images/delete-button.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 24px;
-  width: 24px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s linear;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.card__delete-button:hover {
-  opacity: 0.7;
 }
