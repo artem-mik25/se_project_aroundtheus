@@ -53,9 +53,9 @@
     <!-- Profile Edit Modal -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
-        <button class="modal__close" id="modal-edit-close"></button>
+        <button class="modal__close" id="profile-edit-close"></button>
         <h2 class="modal__heading">Edit profile</h2>
-        <form class="modal__form" id="profile-edit-form">
+        <form class="modal__form" id="profile-edit-form" name="profile-form">
           <input class="modal__input" type="text" name="title" placeholder="Name" id="profile-title-input" value="Jacques Cousteau" />
           <input class="modal__input" type="text" name="description" placeholder="Description" id="profile-description-input" value="Explorer" />
           <button class="modal__button" type="submit">Save</button>
@@ -66,9 +66,9 @@
     <!-- Add Place Modal -->
     <div class="modal" id="add-place-modal">
       <div class="modal__container">
-        <button class="modal__close" id="modal-add-close"></button>
+        <button class="modal__close" id="add-place-close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__form" id="add-place-form">
+        <form class="modal__form" id="add-place-form" name="card-form">
           <input class="modal__input" type="text" name="title" placeholder="Title" id="place-title-input" required />
           <input class="modal__input" type="url" name="image" placeholder="Image URL" id="place-image-input" required />
           <button class="modal__button" type="submit">Create</button>
@@ -79,9 +79,9 @@
     <!-- Image Preview Modal -->
     <div class="modal" id="image-preview-modal">
       <div class="modal__container modal__container--preview">
-        <button class="modal__close modal-preview__close" id="modal-preview-close"></button>
+        <button class="modal__close" id="image-preview-close"></button>
         <img class="modal__image" id="image-preview" src="" alt="Preview Image" />
-        <p class="modal__caption modal-preview__title" id="image-caption"></p>
+        <p class="modal__caption" id="image-caption"></p>
       </div>
     </div>
 
