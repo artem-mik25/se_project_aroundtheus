@@ -28,13 +28,13 @@
   background-color: #fff;
   border-radius: 10px;
   position: relative;
-  width: 430px;
   max-width: 90%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 .modal__close {
-  background-image: url(../images/Closer\ Icon.svg);
+  background-image: url(../images/Close\ Icon.svg);
   background-color: transparent;
   background-repeat: no-repeat;
   background-size: contain;
@@ -46,6 +46,7 @@
   border: none;
   padding: 0;
   transition: opacity 0.3s ease;
+  transform: rotate(45deg);
 }
 
 .modal__close:hover {
@@ -56,7 +57,7 @@
 .modal__heading {
   color: #000;
   margin: 0 0 55px;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-weight: 900;
   font-size: 24px;
   line-height: 1.2;
@@ -70,7 +71,7 @@
 }
 
 .modal__input {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.1;
@@ -87,7 +88,7 @@
 }
 
 .modal__button {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 21px;
@@ -110,8 +111,6 @@
 
 /* Image Preview Modal */
 .modal__container--preview {
-  width: 433px; /* Set fixed width */
-  height: 540px; /* Set fixed height */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,13 +121,10 @@
 }
 
 .modal__image {
-  width: 433px; /* Set fixed width */
-  height: 540px; /* Set fixed height */
-  object-fit: cover; /* Ensure the image fits within the dimensions */
 }
 
 .modal__caption {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 14.52px;
@@ -231,6 +227,10 @@
     padding: 20px;
   }
 
+  .modal__container--preview {
+    padding: 0;
+  }
+
   .modal__heading {
     font-size: 20px;
     margin-bottom: 20px;
@@ -257,14 +257,14 @@
   }
 
   .modal__close {
-    top: -55px;
-    right: -5px;
-    height: 40px;
-    width: 40px;
+    top: -36px;
+    right: 5px;
+    height: 26px;
+    width: 26px;
   }
 
   .modal__image {
-    max-width: 90vw;
+    max-width: 100%;
     max-height: 50vh;
   }
 }
