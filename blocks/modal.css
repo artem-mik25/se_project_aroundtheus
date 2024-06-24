@@ -28,9 +28,18 @@
   background-color: #fff;
   border-radius: 10px;
   position: relative;
+  width: 400px; /* Set the default width */
   max-width: 90%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+}
+
+.modal__container--large {
+  width: 600px; /* Larger width for specific modals if needed */
+}
+
+.modal__container--small {
+  width: 300px; /* Smaller width for specific modals if needed */
 }
 
 .modal__close {
@@ -109,6 +118,31 @@
   opacity: 0.8;
 }
 
+/* Disabled Button Styling */
+.modal__button_disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.modal__error {
+  font-size: 12px;
+  color: red;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  visibility: hidden;
+}
+
+/* Error message visibility */
+.modal__error_visible {
+  visibility: visible;
+}
+
+/* Input error state styling */
+.modal__input_type_error {
+  border-bottom-color: red;
+}
+
 /* Image Preview Modal */
 .modal__container--preview {
   display: flex;
@@ -118,9 +152,7 @@
   background: none;
   padding: 0;
   margin: 0;
-}
-
-.modal__image {
+  width: auto; /* Adjust width for image preview modal */
 }
 
 .modal__caption {
@@ -136,94 +168,9 @@
   max-width: 291px;
 }
 
-/* Delete Button */
-.card__delete-button {
-  background-color: transparent;
-  background-image: url(../images/delete-button.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 24px;
-  width: 24px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s linear;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.card__delete-button:hover {
-  opacity: 0.7;
-}
-
-/* Card Styles */
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.card__image {
-  width: 282px;
-  height: 282px;
-  object-fit: cover;
-}
-
-.card__description {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 20px;
-}
-
-.card__title {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 28px;
-  color: black;
-  max-width: 219px;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card__like-button {
-  background-color: transparent;
-  background-image: url(../images/Like.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 24px;
-  width: 24px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s linear, transform 0.2s ease;
-}
-
-.card__like-button:hover {
-  opacity: 0.5;
-}
-
-.card__like-button.liked {
-  background-image: url(../images/like-active.svg);
-}
-
-/* Responsive Styles */
-/* @media (min-width: 769px) {
-  .modal__close {
-    top: -45px;
-    right: -45px;
-  }
-} */
-
 @media (max-width: 768px) {
   .modal__container {
-    max-width: 282px;
+    width: auto; /* Adjust for responsiveness */
     padding: 20px;
   }
 

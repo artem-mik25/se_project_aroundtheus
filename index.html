@@ -55,10 +55,32 @@
       <div class="modal__container">
         <button class="modal__close" id="profile-edit-close"></button>
         <h2 class="modal__heading">Edit profile</h2>
-        <form class="modal__form" id="profile-edit-form" name="profile-form">
-          <input class="modal__input" type="text" name="title" placeholder="Name" id="profile-title-input" value="Jacques Cousteau" />
-          <input class="modal__input" type="text" name="description" placeholder="Description" id="profile-description-input" value="Explorer" />
-          <button class="modal__button" type="submit">Save</button>
+        <form class="modal__form" id="profile-edit-form" name="profile-form" novalidate>
+          <input
+            class="modal__input"
+            type="text"
+            name="title"
+            placeholder="Name"
+            id="profile-title-input"
+            value="Jacques Cousteau"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <span id="profile-title-input-error" class="modal__error" aria-live="assertive"></span>
+          <input
+            class="modal__input"
+            type="text"
+            name="description"
+            placeholder="Description"
+            id="profile-description-input"
+            value="Explorer"
+            minlength="2"
+            maxlength="200"
+            required
+          />
+          <span id="profile-description-input-error" class="modal__error" aria-live="assertive"></span>
+          <button class="modal__button modal__button_disabled" type="submit" disabled>Save</button>
         </form>
       </div>
     </div>
@@ -68,10 +90,28 @@
       <div class="modal__container">
         <button class="modal__close" id="add-place-close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__form" id="add-place-form" name="card-form">
-          <input class="modal__input" type="text" name="title" placeholder="Title" id="place-title-input" required />
-          <input class="modal__input" type="url" name="image" placeholder="Image URL" id="place-image-input" required />
-          <button class="modal__button" type="submit">Create</button>
+        <form class="modal__form" id="add-place-form" name="card-form" novalidate>
+          <input
+            class="modal__input"
+            type="text"
+            name="title"
+            placeholder="Title"
+            id="place-title-input"
+            minlength="1"
+            maxlength="30"
+            required
+          />
+          <span id="place-title-input-error" class="modal__error" aria-live="assertive"></span>
+          <input
+            class="modal__input"
+            type="url"
+            name="image"
+            placeholder="Image URL"
+            id="place-image-input"
+            required
+          />
+          <span id="place-image-input-error" class="modal__error" aria-live="assertive">Please enter a valid web address.</span>
+          <button class="modal__button modal__button_disabled" type="submit" disabled>Create</button>
         </form>
       </div>
     </div>
@@ -86,5 +126,6 @@
     </div>
 
     <script src="./scripts/index.js"></script>
+    <script defer src="./scripts/validate.js"></script>
   </body>
 </html>

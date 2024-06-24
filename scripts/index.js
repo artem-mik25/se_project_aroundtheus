@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Universal handler for close buttons
   const closeButtons = document.querySelectorAll('.modal__close');
-
   closeButtons.forEach((button) => {
     const popup = button.closest('.modal');
     button.addEventListener('click', () => closeModal(popup));
@@ -60,13 +59,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to open a modal
   function openModal(modal) {
-    modal.classList.add("modal_opened");
+    console.log('Opening modal:', modal);
+    const form = modal.querySelector('.modal__form');
+    if (form) {
+      form.reset();
+      form.querySelectorAll('.modal__input').forEach((input) => {
+        input.dispatchEvent(new Event('input'));
+      });
+    }
+    modal.classList.add('modal_opened');
+    document.addEventListener('keydown', handleEscClose);
   }
 
   // Function to close a modal
   function closeModal(modal) {
-    modal.classList.remove("modal_opened");
+    console.log('Closing modal:', modal);
+    modal.classList.remove('modal_opened');
+    document.removeEventListener('keydown', handleEscClose);
   }
+
+  // Handle closing modal with Esc key
+  function handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      const openModal = document.querySelector('.modal_opened');
+      if (openModal) closeModal(openModal);
+    }
+  }
+
+  // Handle closing modal by clicking on the overlay
+  function handleOverlayClose(evt) {
+    if (evt.target.classList.contains('modal_opened')) {
+      closeModal(evt.target);
+    }
+  }
+
+  document.querySelectorAll('.modal').forEach((modal) => {
+    modal.addEventListener('mousedown', handleOverlayClose);
+  });
 
   // Profile Edit Modal Handlers
   profileEditButton.addEventListener("click", () => {
@@ -112,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cardTitle.textContent = data.name;
 
     cardImage.addEventListener("click", () => {
+      console.log('Image clicked:', data.name);
       imagePreview.src = data.link;
       imagePreview.alt = data.name;
       imageCaption.textContent = data.name;
