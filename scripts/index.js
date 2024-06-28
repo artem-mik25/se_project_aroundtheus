@@ -104,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     profileTitleInput.value = profileTitle.textContent
     profileDescriptionInput.value = profileDescription.textContent
     openModal(profileEditModal)
-
-    resetForm(profileEditForm) // Use existing variable
   })
 
   profileEditForm.addEventListener('submit', (event) => {
@@ -118,8 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add Place Modal Handlers
   profileAddButton.addEventListener('click', () => {
     openModal(addPlaceModal)
-
-    resetForm(addPlaceForm) // Use existing variable
   })
 
   addPlaceForm.addEventListener('submit', (event) => {
