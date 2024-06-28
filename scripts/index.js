@@ -105,8 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     profileDescriptionInput.value = profileDescription.textContent
     openModal(profileEditModal)
 
-    const form = profileEditModal.querySelector('.modal__form')
-    resetForm(form)
+    resetForm(profileEditForm) // Use existing variable
   })
 
   profileEditForm.addEventListener('submit', (event) => {
@@ -120,8 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   profileAddButton.addEventListener('click', () => {
     openModal(addPlaceModal)
 
-    const form = addPlaceModal.querySelector('.modal__form')
-    resetForm(form)
+    resetForm(addPlaceForm) // Use existing variable
   })
 
   addPlaceForm.addEventListener('submit', (event) => {
@@ -132,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const cardElement = getCardElement(newCard)
     cardListEl.prepend(cardElement)
+    addPlaceForm.reset() // Clear inputs immediately after submission
     closeModal(addPlaceModal)
-    addPlaceForm.reset()
   })
 
   // Function to create a card element
