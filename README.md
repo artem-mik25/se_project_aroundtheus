@@ -22,6 +22,3 @@ Good luck and have fun!
 
 Github Pages: 
 https://artem-mik25.github.io/se_project_aroundtheus/
-
-Link to video: 
-https://drive.google.com/file/d/1nPQBgGPTeDUm5GJvWHspsW5Z42Kml2XO/view?usp=sharing
