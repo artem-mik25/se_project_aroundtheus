@@ -9,6 +9,10 @@ export default class FormValidator {
 
   _showInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    if (!errorElement) {
+      console.error('Error Element Not Found:', `#${inputElement.id}-error`);
+      return;
+    }
     inputElement.classList.add(this._config.inputErrorClass);
     errorElement.textContent = inputElement.validationMessage;
     errorElement.classList.add(this._config.errorClass);
@@ -16,6 +20,10 @@ export default class FormValidator {
 
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    if (!errorElement) {
+      console.error('Error Element Not Found:', `#${inputElement.id}-error`);
+      return;
+    }
     inputElement.classList.remove(this._config.inputErrorClass);
     errorElement.textContent = '';
     errorElement.classList.remove(this._config.errorClass);
@@ -56,7 +64,10 @@ export default class FormValidator {
       this._inputList.forEach(inputElement => {
         this._hideInputError(inputElement);
       });
-      this._toggleButtonState();
+      // `setTimeout` is needed to wait till the form is fully reset and then call `toggleButtonState`
+      setTimeout(() => {
+        this._toggleButtonState();
+      }, 1);  // it’s enough to put 1 ms here
     });
   }
 
