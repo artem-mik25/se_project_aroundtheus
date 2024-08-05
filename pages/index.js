@@ -133,7 +133,6 @@ function handleProfileEditSubmit(e) {
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closeModal(profileEditModal);
-  profileEditForm.reset();
 }
 
 function handleAddCardFormSubmit(e) {
@@ -162,6 +161,7 @@ closeButtons.forEach((button) => {
 if (profileEditForm) profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 if (addCardFormElement) addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 if (profileEditButton) profileEditButton.addEventListener("click", () => {
+  profileEditForm.reset();  // Clear possible errors before filling inputs with valid data
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
   openModal(profileEditModal);
