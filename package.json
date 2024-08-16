@@ -1,0 +1,30 @@
+{
+  "name": "tripleten",
+  "version": "0.0.1",
+  "description": "Educational platform",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve --mode development"
+  },
+  "author": "Artem Mikhaylov",
+  "license": "ISC",
+  "dependencies": {
+    "core-js": "3.23.5",
+    "jquery": "^3.7.1",
+    "package-name": "^0.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.9",
+    "@babel/preset-env": "7.18.9",
+    "autoprefixer": "10.4.7",
+    "babel-loader": "8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "cssnano": "5.1.12",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "postcss-loader": "7.0.1",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.9.3"
+  }
+}
