@@ -7,17 +7,16 @@
     <meta name="author" content="Artem Mikhaylov" />
     <meta name="keywords" content="Travel, America, Figma, CSS, HTML" />
     <title>Around The U.S.</title>
-    <link href="./pages/index.css" rel="stylesheet" />
     <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
-        <img alt="Around the US logo" class="header__image" src="./images/AroundTheUS.svg" />
+        <img alt="Around the US logo" class="header__image" src="<%=require('./images/AroundTheUS.svg')%>" />
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img alt="Profile Picture" class="profile__image" src="./images/jacques-cousteau.jpg" />
+          <img alt="Profile Picture" class="profile__image" src="<%=require('./images/jacques-cousteau.jpg')%>" />
           <div class="profile__info">
             <div class="profile__main">
               <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
