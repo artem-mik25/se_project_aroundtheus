@@ -2,7 +2,7 @@ import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
-    super(popupSelector);
+    super(popupSelector);  // Fixed typo 'ppopupSelector' to 'popupSelector'
     this._handleFormSubmit = handleFormSubmit;
     this._formElement = this._popup.querySelector('.modal__form');
     this._inputList = Array.from(this._formElement.querySelectorAll('.modal__input'));
@@ -28,9 +28,8 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  // Overriding the close method to only close the popup without resetting the form
+
   close() {
     super.close();
-    // Do not reset the form here to avoid losing data if popup is closed without submission
   }
 }

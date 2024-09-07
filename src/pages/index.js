@@ -1,11 +1,11 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
-import Section from './Section.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
 import { initialCards, settings } from '../utils/constants.js';
-import '../pages/index.css';
+import './index.css';
 
 // Wrappers and Elements
 const cardsWrap = document.querySelector('.cards__list');
@@ -62,6 +62,7 @@ const createCard = (cardData) => {
   return card.getView();
 };
 
+// Create and render cards using Section class
 const cardSection = new Section({
   items: initialCards,
   renderer: (cardData) => {

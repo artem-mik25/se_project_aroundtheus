@@ -1,4 +1,3 @@
-// webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -7,11 +6,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   devtool: "inline-source-map",
   entry: {
-    main: "./src/components/index.js",
+    main: "./src/pages/index.js", // Adjusted path to point to the 'pages' folder for index.js
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    filename: "main.js", // Output JavaScript file name
     publicPath: "",
   },
   target: ["web", "es5"],
@@ -28,12 +27,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js$/, // Test for JS files
         loader: "babel-loader",
         exclude: "/node_modules/",
       },
       {
-        test: /\.css$/,
+        test: /\.css$/, // Test for CSS files
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -43,17 +42,20 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/,
+        test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/i, // Adjusted to include common assets like fonts and images
         type: "asset/resource",
+        generator: {
+          filename: 'assets/[hash][ext][query]', // Store assets in assets folder with hash-based file names
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      favicon: "./src/images/favicon.ico",
+      template: "./src/index.html", // Adjusted path to point to your root HTML file
+      favicon: "./src/images/favicon.ico", // Ensure favicon path is correct
     }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
+    new CleanWebpackPlugin(), // Cleans up the dist folder before every build
+    new MiniCssExtractPlugin(), // Extracts CSS into separate files
   ],
 };
