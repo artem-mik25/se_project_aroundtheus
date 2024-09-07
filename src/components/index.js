@@ -3,35 +3,9 @@ import FormValidator from './FormValidator.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
+import Section from './Section.js';
+import { initialCards, settings } from '../utils/constants.js';
 import '../pages/index.css';
-
-// Initial Cards Data
-const initialCards = [
-  {
-    name: 'Yosemite Valley',
-    link: require('../images/yosemite.jpg'),
-  },
-  {
-    name: 'Lake Louise',
-    link: require('../images/lake-louise.jpg'),
-  },
-  {
-    name: 'Bald Mountains',
-    link: require('../images/bald-mountains.jpg'),
-  },
-  {
-    name: 'Latemar',
-    link: require('../images/latemar.jpg'),
-  },
-  {
-    name: 'Vanoise National Park',
-    link: require('../images/vanoise.jpg'),
-  },
-  {
-    name: 'Lago di Braies',
-    link: require('../images/lago.jpg'),
-  },
-];
 
 // Wrappers and Elements
 const cardsWrap = document.querySelector('.cards__list');
@@ -42,15 +16,6 @@ const addNewCardButton = document.querySelector('.profile__add-button');
 const profileEditForm = document.forms['profile-form'];
 const addCardFormElement = document.forms['card-form'];
 
-// Validation Configuration
-const validationConfig = {
-  inputSelector: '.modal__input',
-  submitButtonSelector: '.modal__button',
-  inactiveButtonClass: 'modal__button_disabled',
-  inputErrorClass: 'modal__input_type_error',
-  errorClass: 'modal__error_visible',
-};
-
 // Enable Validation for Forms
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll('form'));
@@ -60,7 +25,7 @@ const enableValidation = (config) => {
   });
 };
 
-enableValidation(validationConfig);
+enableValidation(settings);
 
 // Create an instance of UserInfo
 const userInfo = new UserInfo({
@@ -70,7 +35,6 @@ const userInfo = new UserInfo({
 
 // Create an instance of PopupWithForm for the profile edit form
 const profileFormPopup = new PopupWithForm('#profile-edit-modal', (formData) => {
-  // Update the user info with new data
   userInfo.setUserInfo({ name: formData.title, job: formData.description });
 });
 profileFormPopup.setEventListeners();
@@ -92,25 +56,27 @@ const handleImageClick = (name, link) => {
   imagePopup.open({ name, link });
 };
 
-// Create a card and render it
+// Create and render cards
 const createCard = (cardData) => {
   const card = new Card(cardData, '#card-template', handleImageClick);
   return card.getView();
 };
 
-// Render cards on the page
-const renderCard = (cardData, wrapper) => {
-  const card = createCard(cardData);
-  wrapper.prepend(card);
-};
+const cardSection = new Section({
+  items: initialCards,
+  renderer: (cardData) => {
+    const card = createCard(cardData);
+    cardSection.addItem(card);
+  }
+}, '.cards__list');
 
-// Initial render of cards
-initialCards.forEach((cardData) => renderCard(cardData, cardsWrap));
+cardSection.renderItems();
 
 // Create an instance of PopupWithForm for the add card form
 const addPlaceFormPopup = new PopupWithForm('#add-place-modal', (formData) => {
   const cardData = { name: formData.title, link: formData.image };
-  renderCard(cardData, cardsWrap); // Render the new card
+  const newCard = createCard(cardData);
+  cardSection.addItem(newCard);
 });
 addPlaceFormPopup.setEventListeners();
 
