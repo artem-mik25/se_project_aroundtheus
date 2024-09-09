@@ -1,27 +1,27 @@
 export const initialCards = [
   {
     name: 'Yosemite Valley',
-    link: new URL('../images/yosemite.jpg', import.meta.url),
+    link: require('../images/yosemite.jpg'),
   },
   {
     name: 'Lake Louise',
-    link: new URL('../images/lake-louise.jpg', import.meta.url),
+    link: require('../images/lake-louise.jpg'),
   },
   {
     name: 'Bald Mountains',
-    link: new URL('../images/bald-mountains.jpg', import.meta.url),
+    link: require('../images/bald-mountains.jpg'),
   },
   {
     name: 'Latemar',
-    link: new URL('../images/latemar.jpg', import.meta.url),
+    link: require('../images/latemar.jpg'),
   },
   {
     name: 'Vanoise National Park',
-    link: new URL('../images/vanoise.jpg', import.meta.url),
+    link: require('../images/vanoise.jpg'),
   },
   {
     name: 'Lago di Braies',
-    link: new URL('../images/lago.jpg', import.meta.url),
+    link: require('../images/lago.jpg'),
   },
 ];
 

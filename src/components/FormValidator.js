@@ -64,10 +64,9 @@ export default class FormValidator {
       this._inputList.forEach(inputElement => {
         this._hideInputError(inputElement);
       });
-      // `setTimeout` is needed to wait till the form is fully reset and then call `toggleButtonState`
       setTimeout(() => {
         this._toggleButtonState();
-      }, 1);  // it’s enough to put 1 ms here
+      }, 1);
     });
   }
 

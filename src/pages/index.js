@@ -5,7 +5,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import { initialCards, settings } from '../utils/constants.js';
-import './index.css';
+import '../pages/index.css';
 
 // Wrappers and Elements
 const cardsWrap = document.querySelector('.cards__list');
@@ -36,6 +36,7 @@ const userInfo = new UserInfo({
 // Create an instance of PopupWithForm for the profile edit form
 const profileFormPopup = new PopupWithForm('#profile-edit-modal', (formData) => {
   userInfo.setUserInfo({ name: formData.title, job: formData.description });
+  profileFormPopup.close();  // Close the popup after submission
 });
 profileFormPopup.setEventListeners();
 
@@ -62,7 +63,6 @@ const createCard = (cardData) => {
   return card.getView();
 };
 
-// Create and render cards using Section class
 const cardSection = new Section({
   items: initialCards,
   renderer: (cardData) => {
@@ -76,8 +76,16 @@ cardSection.renderItems();
 // Create an instance of PopupWithForm for the add card form
 const addPlaceFormPopup = new PopupWithForm('#add-place-modal', (formData) => {
   const cardData = { name: formData.title, link: formData.image };
+
+  // Prevent adding a card if the fields are empty or invalid
+  if (!cardData.name.trim() || !cardData.link.trim()) {
+    alert('Please fill out both the name and image URL fields.');
+    return;
+  }
+
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
+  addPlaceFormPopup.close();  // Close the popup after submission
 });
 addPlaceFormPopup.setEventListeners();
 
