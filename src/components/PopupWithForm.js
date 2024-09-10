@@ -23,14 +23,10 @@ export default class PopupWithForm extends Popup {
     this._formElement.addEventListener('submit', (event) => {
       event.preventDefault();
       this._handleFormSubmit(this._getInputValues()); // Call the provided callback function
-      this._formElement.reset(); // Reset the form only after submission
-      this.close(); // Close the form popup after submit
+      this._formElement.reset(); // Reset the form after submission
+      this.close();  // Close the form popup after submit
     });
   }
 
-  // Overriding the close method to only close the popup without resetting the form
-  close() {
-    super.close();
-    // Do not reset the form here to avoid losing data if popup is closed without submission
-  }
+  // No close method override is needed here as it's handled by the parent class
 }

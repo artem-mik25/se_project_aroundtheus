@@ -59,6 +59,7 @@ const handleImageClick = (name, link) => {
 
 // Create and render cards
 const createCard = (cardData) => {
+  console.log("Creating card with data:", cardData); // Log cardData to check if the image URL is correct
   const card = new Card(cardData, '#card-template', handleImageClick);
   return card.getView();
 };
@@ -82,6 +83,8 @@ const addPlaceFormPopup = new PopupWithForm('#add-place-modal', (formData) => {
     alert('Please fill out both the name and image URL fields.');
     return;
   }
+
+  console.log("Form submitted with data:", cardData); // Log formData to ensure valid data
 
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
