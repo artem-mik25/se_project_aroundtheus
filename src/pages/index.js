@@ -1,7 +1,9 @@
+// index.js
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import ModalConfirmDelete from '../components/ModalConfirmDelete.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import { initialCards, settings } from '../utils/constants.js';
@@ -57,18 +59,37 @@ const handleImageClick = (name, link) => {
   imagePopup.open({ name, link });
 };
 
+// Initialize the delete confirmation modal
+const modalConfirmDelete = new ModalConfirmDelete('#confirm-delete-modal', {
+  handleFormSubmit: (cardId, cardElement) => {
+    // Perform deletion logic here (e.g., API call)
+    cardElement.remove();
+    modalConfirmDelete.close();
+  },
+});
+modalConfirmDelete.setEventListeners();
+
 // Create and render cards
 const createCard = (cardData) => {
   console.log("Creating card with data:", cardData); // Log cardData to check if the image URL is correct
-  const card = new Card(cardData, '#card-template', handleImageClick);
+
+  const card = new Card(
+    cardData,
+    '#card-template',
+    handleImageClick,
+    (cardId, cardElement) => {
+      modalConfirmDelete.open(cardId, cardElement);
+    }
+  );
+
   return card.getView();
 };
 
 const cardSection = new Section({
   items: initialCards,
   renderer: (cardData) => {
-    const card = createCard(cardData);
-    cardSection.addItem(card);
+    const cardElement = createCard(cardData);
+    cardSection.addItem(cardElement);
   }
 }, '.cards__list');
 

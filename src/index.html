@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Around The US" />
-    <meta name="author" content="Artem Mikhaylov" />
+    <meta name="author" content="Your Name" />
     <meta name="keywords" content="Travel, America, Figma, CSS, HTML" />
     <title>Around The U.S.</title>
     <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -52,9 +52,9 @@
     <!-- Profile Edit Modal -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
-        <button class="modal__close" id="profile-edit-close"></button>
+        <button class="modal__close"></button>
         <h2 class="modal__heading">Edit profile</h2>
-        <form class="modal__form" id="profile-edit-form" name="profile-form" novalidate>
+        <form class="modal__form" name="profile-form" novalidate>
           <label class="modal__label">
             <input
               class="modal__input"
@@ -91,9 +91,9 @@
     <!-- Add Place Modal -->
     <div class="modal" id="add-place-modal">
       <div class="modal__container">
-        <button class="modal__close" id="add-place-close"></button>
+        <button class="modal__close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__form" id="add-place-form" name="card-form" novalidate>
+        <form class="modal__form" name="card-form" novalidate>
           <label class="modal__label">
             <input
               class="modal__input"
@@ -126,9 +126,20 @@
     <!-- Image Preview Modal -->
     <div class="modal" id="image-preview-modal">
       <div class="modal__container modal__container--preview">
-        <button class="modal__close" id="image-preview-close"></button>
-        <img class="modal__image" id="image-preview" src="" alt="Preview Image" />
-        <p class="modal__caption" id="image-caption"></p>
+        <button class="modal__close"></button>
+        <img class="modal__image" src="" alt="Preview Image" />
+        <p class="modal__caption"></p>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="confirm-delete-modal">
+      <div class="modal__container">
+        <button class="modal__close"></button>
+        <h2 class="modal__heading">Are you sure?</h2>
+        <form class="modal__form" name="confirm-delete-form" novalidate>
+          <button class="modal__button" type="submit">Yes</button>
+        </form>
       </div>
     </div>
 
