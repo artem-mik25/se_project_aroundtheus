@@ -17,15 +17,45 @@
   margin-bottom: 36px;
 }
 
+.profile__avatar-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
 .profile__image {
   width: 120px;
   height: 120px;
   margin-bottom: 30px;
   border-radius: 50%;
   object-fit: cover;
-  background-position: center;
+  transition: opacity 0.3s ease;
 }
 
+/* Add pen icon using pseudo-element */
+.profile__avatar-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url('../images/pen.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px; /* Adjusted size for better visibility */
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease, background-size 0.3s ease;
+}
+
+.profile__avatar-container:hover::after {
+  opacity: 1;
+  background-size: 32px; /* Slightly larger on hover for better emphasis */
+}
+
+/* Profile Titles and Description */
 .profile__title,
 .profile__description {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -36,17 +66,15 @@
 }
 
 .profile__title {
-  grid-area: title;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.1;
   margin-bottom: 14px;
   max-width: 200px;
-  margin-top: 0%;
+  margin-top: 0;
 }
 
 .profile__description {
-  grid-area: description;
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
@@ -55,6 +83,7 @@
   text-align: center;
 }
 
+/* Profile Buttons */
 .profile__edit-button,
 .profile__add-button {
   background: transparent;
@@ -63,20 +92,21 @@
 }
 
 .profile__edit-button {
-  grid-area: button;
   width: 18px;
   height: 18px;
   background-image: url('../images/pen.svg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 7.5px;
-  border: 1px solid #fff;
+  background-size: 10px; /* Improved size for better visibility */
+  border: 1.5px solid #fff; /* Slightly thicker for emphasis */
   margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.profile__edit-button:hover,
-.profile__add-button:hover {
-  opacity: 0.6;
+.profile__edit-button:hover {
+  opacity: 0.8;
+  transform: scale(1.1); /* Slightly increase size on hover for emphasis */
 }
 
 .profile__add-button {
@@ -91,6 +121,12 @@
   background-size: 16px;
 }
 
+.profile__edit-button:hover,
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+/* Media Queries for Larger Screens */
 @media screen and (min-width: 800px) {
   .profile {
     flex-direction: row;
@@ -111,7 +147,7 @@
     margin-left: 16px;
     height: 24px;
     width: 24px;
-    background-size: 10px;
+    background-size: 12px; /* Increased size for icon thickness */
   }
 
   .profile__image {
@@ -128,5 +164,9 @@
   .profile__description {
     text-align: left;
     font-size: 18px;
+  }
+
+  .profile__avatar-container::after {
+    background-size: 36px; /* Larger pen icon for better visibility on larger screens */
   }
 }

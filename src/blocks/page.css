@@ -1,3 +1,4 @@
+/* General Page Styling */
 .page {
   background-color: black;
   color: white;
@@ -22,5 +23,181 @@
 @media screen and (max-width: 800px) {
   .page__content {
     max-width: 100%;
+  }
+}
+
+/* Profile Styling */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  margin-bottom: 36px;
+}
+
+.profile__main {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.profile__info {
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+/* Profile Avatar and Edit Icon */
+.profile__avatar-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profile__image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+/* Add pen icon using pseudo-element */
+.profile__avatar-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-image: url('../images/pen.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px; /* Increased size for better visibility */
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease, background-size 0.3s ease;
+}
+
+.profile__avatar-container:hover::after {
+  opacity: 1;
+  background-size: 32px; /* Slightly larger on hover to create a more pronounced effect */
+}
+
+/* Profile Edit Button - near Profile Title */
+.profile__edit-button {
+  width: 24px;  /* Adjusted size for better visibility */
+  height: 24px;
+  background-image: url('../images/pen.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px; /* Increased size for icon thickness */
+  border: 1.5px solid #fff; /* Slightly thicker border for emphasis */
+  margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profile__edit-button:hover {
+  transform: scale(1.1); /* Makes the edit icon slightly larger on hover */
+  opacity: 0.8;
+}
+
+/* Profile Titles and Description */
+.profile__title,
+.profile__description {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profile__title {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  max-width: 200px;
+  margin-top: 0;
+}
+
+.profile__description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  max-width: 300px;
+  margin: 0;
+  text-align: center;
+}
+
+/* Profile Buttons */
+.profile__edit-button,
+.profile__add-button {
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.profile__add-button {
+  width: 100%;
+  max-width: 300px;
+  height: 50px;
+  background-image: url('../images/Add Button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  background-size: 16px;
+}
+
+.profile__edit-button:hover,
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+/* Media Queries for Larger Screens */
+@media screen and (min-width: 800px) {
+  .profile {
+    flex-direction: row;
+    margin-bottom: 51px;
+  }
+
+  .profile__info {
+    margin-bottom: 0;
+  }
+
+  .profile__title {
+    font-size: 42px;
+    margin-bottom: 7px;
+    max-width: 450px;
+  }
+
+  .profile__edit-button {
+    margin-left: 16px;
+    height: 32px;
+    width: 32px;
+    background-size: 14px; /* Increased size on larger screens */
+  }
+
+  .profile__image {
+    margin-right: 24px;
+    margin-bottom: 0;
+  }
+
+  .profile__add-button {
+    margin-left: auto;
+    width: 150px;
+    background-size: 22px;
+  }
+
+  .profile__description {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  .profile__avatar-container::after {
+    background-size: 36px; /* Larger pen icon for larger screens */
   }
 }
