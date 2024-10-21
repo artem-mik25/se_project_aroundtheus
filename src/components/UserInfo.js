@@ -19,17 +19,6 @@ export default class UserInfo {
   setUserInfo({ name, job, avatar }) {
     if (name) this._nameElement.textContent = name;
     if (job) this._jobElement.textContent = job;
-
-    if (avatar) {
-      // Set up the avatar image with proper error handling for broken links
-      this._avatarElement.src = avatar;
-      this._avatarElement.alt = `Avatar of ${name || this._nameElement.textContent}`;
-
-      // Error handling to load a fallback image if the provided avatar fails to load
-      this._avatarElement.onerror = () => {
-        this._avatarElement.src = 'https://placekitten.com/150/150'; // Fallback image for avatar
-        this._avatarElement.alt = 'Fallback avatar image';
-      };
-    }
+    if (avatar) this._avatarElement.src = avatar;
   }
 }

@@ -10,13 +10,8 @@ export default class PopupWithImage extends Popup {
 
   // Overriding the open method to accept data and set image and caption
   open({ name, link }) {
-    if (!link.trim() || !name.trim()) {
-      console.error('Invalid image data: missing name or link');
-      return;
-    }
-
     this._imageElement.src = link;
-    this._imageElement.alt = `Image of ${name}`;
+    this._imageElement.alt = name;
     this._captionElement.textContent = name;
     super.open(); // Call the parent class open method
   }

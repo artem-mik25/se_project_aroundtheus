@@ -18,25 +18,19 @@ export default class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to fetch user info: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Update user profile information
-  updateUserInfo({ name, about }) {
+  updateUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about,
+        name: data.name,
+        about: data.about,
       }),
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to update user info: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Update user avatar
@@ -47,35 +41,26 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatarUrl,
       }),
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to update user avatar: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Fetch initial cards
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to fetch initial cards: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Create a new card
-  addCard({ name, link }) {
+  addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link,
+        name: data.name,
+        link: data.link,
       }),
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to add new card: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Delete a card
@@ -83,10 +68,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to delete card: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Like a card
@@ -94,10 +76,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to like card: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Dislike a card
@@ -105,18 +84,12 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse)
-      .catch((err) => {
-        console.error(`Failed to dislike card: ${err}`);
-      });
+    }).then(this._checkResponse);
   }
 
   // Fetch both user info and initial cards
   getAppInfo() {
-    return Promise.all([this.getUserInfo(), this.getInitialCards()])
-      .catch((err) => {
-        console.error(`Failed to fetch app info: ${err}`);
-      });
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 }
 

@@ -44,12 +44,6 @@ export default class Card {
     this._deleteButton.addEventListener("click", () => {
       this._handleDeleteClick(this._cardId, this._element);
     });
-
-    // Handle broken image URLs
-    this._cardImage.addEventListener("error", () => {
-      this._cardImage.src = "https://placekitten.com/400/300"; // Fallback image URL
-      this._cardImage.alt = "Fallback image";
-    });
   }
 
   // Method to toggle the like button

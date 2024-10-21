@@ -16,9 +16,10 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <div class="profile__avatar-container">
+          <div class="profile__image__wrap">
             <img alt="Profile Picture" class="profile__image" src="<%=require('./images/jacques-cousteau.jpg')%>" />
-          </div>  
+            <button type="button" class="profile__image__edit" id="profile-image-edit" ></button>
+          </div>
           <div class="profile__info">
             <div class="profile__main">
               <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
@@ -145,24 +146,14 @@
       </div>
     </div>
 
-    <!-- Edit Profile Picture Modal -->
-    <div class="modal" id="avatar-edit-modal">
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="profile-image-modal">
       <div class="modal__container">
         <button class="modal__close"></button>
-        <h2 class="modal__heading">Change Profile Picture</h2>
-        <form class="modal__form" name="avatar-form" novalidate>
-          <label class="modal__label">
-            <input
-              class="modal__input"
-              type="url"
-              name="avatar"
-              placeholder="Image URL"
-              id="avatar-input"
-              required
-            />
-            <span id="avatar-input-error" class="modal__error" aria-live="assertive">Please enter a valid web address.</span>
-          </label>
-          <button class="modal__button modal__button_disabled" type="submit" disabled>Save</button>
+        <h2 class="modal__heading">Change profile picture</h2>
+        <form class="modal__form" name="confirm-delete-form" novalidate>
+          <input type="text" class="modal__input">
+          <button class="modal__button" type="submit">Save</button>
         </form>
       </div>
     </div>

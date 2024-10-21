@@ -13,12 +13,11 @@ import '../pages/index.css';
 const cardsWrap = document.querySelector('.cards__list');
 const profileEditButton = document.querySelector('#profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__add-button');
-const avatarEditIcon = document.querySelector('.profile__avatar-container');
+const profileImageEditButton = document.querySelector('#profile-image-edit');
 
 // Form Elements
 const profileEditForm = document.forms['profile-form'];
 const addCardFormElement = document.forms['card-form'];
-const avatarEditFormElement = document.forms['avatar-form'];
 
 // Enable Validation for Forms
 const enableValidation = (config) => {
@@ -35,19 +34,12 @@ enableValidation(settings);
 const userInfo = new UserInfo({
   nameSelector: '#profile-title',
   jobSelector: '#profile-description',
-  avatarSelector: '.profile__image'
 });
 
 // Create an instance of PopupWithForm for the profile edit form
 const profileFormPopup = new PopupWithForm('#profile-edit-modal', (formData) => {
-  profileFormPopup.renderLoading(true, 'Saving...'); // Show "Saving..." text
-  
-  // Simulate an API request or add your actual API request here
-  setTimeout(() => {
-    userInfo.setUserInfo({ name: formData.title, job: formData.description });
-    profileFormPopup.renderLoading(false); // Reset button text
-    profileFormPopup.close();  // Close the popup after submission
-  }, 2000); // Simulated delay to demonstrate loading state
+  userInfo.setUserInfo({ name: formData.title, job: formData.description });
+  profileFormPopup.close();  // Close the popup after submission
 });
 profileFormPopup.setEventListeners();
 
@@ -80,6 +72,8 @@ modalConfirmDelete.setEventListeners();
 
 // Create and render cards
 const createCard = (cardData) => {
+  console.log("Creating card with data:", cardData); // Log cardData to check if the image URL is correct
+
   const card = new Card(
     cardData,
     '#card-template',
@@ -104,23 +98,19 @@ cardSection.renderItems();
 
 // Create an instance of PopupWithForm for the add card form
 const addPlaceFormPopup = new PopupWithForm('#add-place-modal', (formData) => {
-  addPlaceFormPopup.renderLoading(true, 'Saving...'); // Show "Saving..." text
-
   const cardData = { name: formData.title, link: formData.image };
 
   // Prevent adding a card if the fields are empty or invalid
   if (!cardData.name.trim() || !cardData.link.trim()) {
     alert('Please fill out both the name and image URL fields.');
-    addPlaceFormPopup.renderLoading(false); // Reset button text in case of validation error
     return;
   }
 
-  setTimeout(() => {
-    const newCard = createCard(cardData);
-    cardSection.addItem(newCard);
-    addPlaceFormPopup.renderLoading(false); // Reset button text
-    addPlaceFormPopup.close();  // Close the popup after submission
-  }, 2000); // Simulated delay to demonstrate loading state
+  console.log("Form submitted with data:", cardData); // Log formData to ensure valid data
+
+  const newCard = createCard(cardData);
+  cardSection.addItem(newCard);
+  addPlaceFormPopup.close();  // Close the popup after submission
 });
 addPlaceFormPopup.setEventListeners();
 
@@ -129,24 +119,15 @@ addNewCardButton.addEventListener('click', () => {
   addPlaceFormPopup.open();
 });
 
-// Create an instance of PopupWithForm for the avatar edit form
-const avatarFormPopup = new PopupWithForm('#avatar-edit-modal', (formData) => {
-  avatarFormPopup.renderLoading(true, 'Saving...'); // Show "Saving..." text
-
-  const newAvatarLink = formData.avatar;
-
-  // Simulate an API request or add your actual API request here
-  setTimeout(() => {
-    userInfo.setUserInfo({ avatar: newAvatarLink });
-    avatarFormPopup.renderLoading(false); // Reset button text
-    avatarFormPopup.close();  // Close the popup after submission
-  }, 2000); // Simulated delay to demonstrate loading state
+const profileImagePopup = new ModalConfirmDelete('#profile-image-modal', {
+  handleFormSubmit: () => {
+    console.log('Profile image updated');
+    profileImagePopup.close();
+  },
 });
-avatarFormPopup.setEventListeners();
 
-// Handle opening the avatar edit popup
-avatarEditIcon.addEventListener('click', () => {
-  const currentUserInfo = userInfo.getUserInfo();
-  document.querySelector('#avatar-input').value = currentUserInfo.avatar; // Pre-fill with the current avatar URL
-  avatarFormPopup.open();
-});
+profileImagePopup.setEventListeners();
+
+profileImageEditButton.addEventListener('click', () => {
+  profileImagePopup.open();
+})
