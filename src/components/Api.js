@@ -10,7 +10,6 @@ export default class Api {
     if (res.ok) {
       return res.json();
     }
-    // If the server returns an error, reject the promise
     return Promise.reject(`Error: ${res.status}`);
   }
 
@@ -22,14 +21,11 @@ export default class Api {
   }
 
   // Update user profile information
-  updateUserInfo(data) {
+  updateUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about,
-      }),
+      body: JSON.stringify({ name, about }),
     }).then(this._checkResponse);
   }
 
@@ -38,9 +34,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatarUrl,
-      }),
+      body: JSON.stringify({ avatar: avatarUrl }),
     }).then(this._checkResponse);
   }
 
@@ -52,14 +46,11 @@ export default class Api {
   }
 
   // Create a new card
-  addCard(data) {
+  addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link,
-      }),
+      body: JSON.stringify({ name, link }),
     }).then(this._checkResponse);
   }
 

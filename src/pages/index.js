@@ -7,7 +7,19 @@ import ModalConfirmDelete from '../components/ModalConfirmDelete.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import { initialCards, settings } from '../utils/constants.js';
+import Api from '../components/Api.js';
 import '../pages/index.css';
+
+// API
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "a44aa497-1b5c-4737-a030-aa953cdc7c47",
+    "Content-Type": "application/json",
+  },
+});
+
 
 // Wrappers and Elements
 const cardsWrap = document.querySelector('.cards__list');

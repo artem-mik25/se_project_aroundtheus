@@ -7,6 +7,8 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._formElement = this._popup.querySelector('.modal__form');
     this._inputList = Array.from(this._formElement.querySelectorAll('.modal__input'));
+    this._submitButton = this._formElement.querySelector('.modal__button');
+    this._defaultSubmitButtonText = this._submitButton.textContent; // Store default button text
   }
 
   // Private method to collect input values from all form fields
@@ -24,13 +26,38 @@ export default class PopupWithForm extends Popup {
     this._formElement.reset();
   }
 
+  // Method to render loading state for form submission
+  renderLoading(isLoading, loadingText = 'Saving...') {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = this._defaultSubmitButtonText;
+    }
+  }
+
   // Overriding setEventListeners to add form submit handling
   setEventListeners() {
     super.setEventListeners();
     this._formElement.addEventListener('submit', (event) => {
       event.preventDefault();
-      this._handleFormSubmit(this._getInputValues()); // Call the provided callback function
-      this.close();  // Close the form popup after submit
+      this.renderLoading(true); // Show loading state when form is submitted
+      this._handleFormSubmit(this._getInputValues())
+        .then(() => {
+          this.close();  // Close the form popup after successful submission
+        })
+        .catch((err) => {
+          console.error(`Form submission error: ${err}`);
+        })
+        .finally(() => {
+          this.renderLoading(false); // Reset loading state regardless of success or failure
+        });
     });
+  }
+
+  // Overriding the close method to reset form and remove loading state
+  close() {
+    super.close();
+    this._formElement.reset();
+    this.renderLoading(false); // Reset loading state when popup is closed
   }
 }
