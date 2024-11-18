@@ -29,6 +29,7 @@ const userInfo = new UserInfo({
 const profileEditButton = document.querySelector('#profile__edit-button');
 const addNewCardButton = document.querySelector('#profile-add-button');
 const profileImageEditButton = document.querySelector('#profile-image-edit');
+
 if (!profileEditButton || !addNewCardButton || !profileImageEditButton) {
   console.error('Error: One or more profile buttons not found in the DOM');
 }
@@ -112,7 +113,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     }
 
     if (Array.isArray(cardsData)) {
-      cardSection.renderItems(cardsData);
+      cardSection.setItems(cardsData);
     } else {
       console.warn('Cards data is not an array:', cardsData);
     }
