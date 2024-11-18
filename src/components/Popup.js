@@ -1,36 +1,40 @@
-// components/Popup.js
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._handleEscClose = this._handleEscClose.bind(this); // Bind to ensure `this` references the class
+
+    if (!this._popup) {
+      throw new Error(`Popup: Element with selector "${popupSelector}" not found`);
+    }
+
+    this._handleEscClose = this._handleEscClose.bind(this); // Bind context
   }
 
-  // Public method to open the popup
+  // Open the popup
   open() {
     this._popup.classList.add('modal_opened');
-    document.addEventListener('keydown', this._handleEscClose); // Attach Esc key event
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
-  // Public method to close the popup
+  // Close the popup
   close() {
     this._popup.classList.remove('modal_opened');
-    document.removeEventListener('keydown', this._handleEscClose); // Detach Esc key event
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
-  // Private method to close popup on Esc key press
-  _handleEscClose(event) {
-    if (event.key === 'Escape') {
+  // Private method to close popup on Escape key
+  _handleEscClose(evt) {
+    if (evt.key === 'Escape') {
       this.close();
     }
   }
 
-  // Public method to set event listeners (closing on click and close button)
+  // Set event listeners for closing the popup
   setEventListeners() {
-    // Close the popup when clicking on the close button or outside the form
-    this._popup.addEventListener('mousedown', (event) => {
+    this._popup.addEventListener('mousedown', (evt) => {
+      // Close on overlay click or close button click
       if (
-        event.target.classList.contains('modal__close') ||
-        event.target === this._popup
+        evt.target.classList.contains('modal__close') ||
+        evt.target === this._popup
       ) {
         this.close();
       }

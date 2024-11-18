@@ -1,29 +1,62 @@
-// DOM elements for the image modal
-export const imageElement = imageModalWindow.querySelector(".popup__image");
-export const imageCaption = imageModalWindow.querySelector(".popup__caption");
-
-// Function to close the modal
-export const closeModal = (modalWindow) => {
-    modalWindow.classList.remove("popup_is-opened");
-    document.removeEventListener("keyup", handleEscUp);
-};
-
-// Function to open the modal
+// Open a modal window
 export const openModal = (modalWindow) => {
-    modalWindow.classList.add("popup_is-opened");
-    document.addEventListener("keyup", handleEscUp);
-};
-
-// Function to handle Escape key event for closing the modal
-export const handleEscUp = (evt) => {
-    evt.preventDefault();
-    isEscEvent(evt, closeModal);
-};
-
-// Function to check if the key pressed is Escape and run the provided action
-export const isEscEvent = (evt, action) => {
-    const activePopup = document.querySelector(".popup_is-opened");
-    if (evt.key === "Escape") {
-        action(activePopup);
+    if (!modalWindow) {
+      console.warn('openModal: No modal window provided');
+      return;
     }
-};
+    modalWindow.classList.add('modal_opened');
+    document.addEventListener('keydown', handleEscKey);
+  };
+  
+  // Close a modal window
+  export const closeModal = (modalWindow) => {
+    if (!modalWindow) {
+      console.warn('closeModal: No modal window provided');
+      return;
+    }
+    modalWindow.classList.remove('modal_opened');
+    document.removeEventListener('keydown', handleEscKey);
+  };
+  
+  // Handle the Escape key for closing modals
+  const handleEscKey = (evt) => {
+    if (evt.key === 'Escape') {
+      const activeModal = document.querySelector('.modal_opened');
+      if (activeModal) {
+        closeModal(activeModal);
+      }
+    }
+  };
+  
+  // Check if the pressed key is Escape and run a specific action
+  export const isEscapeKey = (evt, action) => {
+    if (evt.key === 'Escape') {
+      action();
+    }
+  };
+  
+  // Safely select an element by selector
+  export const selectElement = (selector) => {
+    const element = document.querySelector(selector);
+    if (!element) {
+      console.warn(`selectElement: Element with selector "${selector}" not found`);
+    }
+    return element;
+  };
+  
+  // Utility to clear all children of an element
+  export const clearContainer = (container) => {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  };
+  
+  // Example DOM elements for image preview
+  export const imageModalWindow = document.querySelector('.modal_image');
+  export const imageElement = imageModalWindow?.querySelector('.modal__image');
+  export const imageCaption = imageModalWindow?.querySelector('.modal__caption');
+  
+  if (!imageModalWindow || !imageElement || !imageCaption) {
+    console.error('Error: Image modal elements are missing from the DOM');
+  }
+  

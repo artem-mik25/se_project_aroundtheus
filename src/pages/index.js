@@ -1,4 +1,3 @@
-// index.js
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -6,32 +5,183 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import ModalConfirmDelete from '../components/ModalConfirmDelete.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
-import { initialCards, settings } from '../utils/constants.js';
 import Api from '../components/Api.js';
 import '../pages/index.css';
+import { settings } from '../utils/constants.js';
 
-// API
-
+// Initialize API
 const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  baseUrl: 'https://around-api.en.tripleten-services.com/v1',
   headers: {
-    authorization: "a44aa497-1b5c-4737-a030-aa953cdc7c47",
-    "Content-Type": "application/json",
+    authorization: 'a44aa497-1b5c-4737-a030-aa953cdc7c47',
+    'Content-Type': 'application/json',
   },
 });
 
+// Initialize User Info
+const userInfo = new UserInfo({
+  nameSelector: '#profile-title',
+  jobSelector: '#profile-description',
+  avatarSelector: '.profile__image',
+});
 
-// Wrappers and Elements
-const cardsWrap = document.querySelector('.cards__list');
+// Validate DOM elements
 const profileEditButton = document.querySelector('#profile__edit-button');
-const addNewCardButton = document.querySelector('.profile__add-button');
+const addNewCardButton = document.querySelector('#profile-add-button');
 const profileImageEditButton = document.querySelector('#profile-image-edit');
+if (!profileEditButton || !addNewCardButton || !profileImageEditButton) {
+  console.error('Error: One or more profile buttons not found in the DOM');
+}
 
-// Form Elements
-const profileEditForm = document.forms['profile-form'];
-const addCardFormElement = document.forms['card-form'];
+// Initialize Popups
+const imagePopup = new PopupWithImage('#image-preview-modal');
+imagePopup.setEventListeners();
 
-// Enable Validation for Forms
+const profilePopup = new PopupWithForm('#profile-edit-modal', (formData) => {
+  profilePopup.renderLoading(true);
+  return api
+    .updateUserInfo({ name: formData.title, job: formData.description })
+    .then((updatedData) => {
+      userInfo.setUserInfo({ name: updatedData.name, job: updatedData.about });
+      profilePopup.close();
+    })
+    .catch((err) => {
+      console.error(`Error updating profile: ${err}`);
+      alert('Failed to update profile. Please try again.');
+    })
+    .finally(() => profilePopup.renderLoading(false));
+});
+profilePopup.setEventListeners();
+
+const addCardPopup = new PopupWithForm('#add-place-modal', (formData) => {
+  addCardPopup.renderLoading(true);
+  const cardData = { name: formData.title, link: formData.image };
+
+  return api
+    .addCard(cardData)
+    .then((newCard) => {
+      const cardElement = createCard(newCard);
+      cardSection.addItem(cardElement);
+      addCardPopup.close();
+    })
+    .catch((err) => {
+      console.error(`Error adding card: ${err}`);
+      alert('Failed to add card. Please try again.');
+    })
+    .finally(() => addCardPopup.renderLoading(false));
+});
+addCardPopup.setEventListeners();
+
+const confirmDeletePopup = new ModalConfirmDelete('#confirm-delete-modal', {
+  handleFormSubmit: (cardId, cardElement) => {
+    confirmDeletePopup.renderLoading(true);
+    return api
+      .deleteCard(cardId)
+      .then(() => {
+        cardElement.remove();
+        confirmDeletePopup.close();
+      })
+      .catch((err) => {
+        console.error(`Error deleting card: ${err}`);
+        alert('Failed to delete card. Please try again.');
+      })
+      .finally(() => confirmDeletePopup.renderLoading(false));
+  },
+});
+confirmDeletePopup.setEventListeners();
+
+// Initialize Card Section
+const cardSection = new Section(
+  {
+    renderer: (cardData) => {
+      const cardElement = createCard(cardData);
+      cardSection.addItem(cardElement);
+    },
+  },
+  '.cards__list'
+);
+
+// Fetch and render user info and initial cards
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardsData]) => {
+    if (userData) {
+      userInfo.setUserInfo({ name: userData.name, job: userData.about });
+      userInfo.setAvatar(userData.avatar);
+    } else {
+      console.warn('User data is not available');
+    }
+
+    if (Array.isArray(cardsData)) {
+      cardSection.renderItems(cardsData);
+    } else {
+      console.warn('Cards data is not an array:', cardsData);
+    }
+  })
+  .catch((err) => {
+    console.error(`Error fetching data: ${err}`);
+  });
+
+// Profile Edit Button
+profileEditButton?.addEventListener('click', () => {
+  const currentUserInfo = userInfo.getUserInfo();
+  profilePopup.setInputValues({
+    title: currentUserInfo.name,
+    description: currentUserInfo.job,
+  });
+  profilePopup.open();
+});
+
+// Add Card Button
+addNewCardButton?.addEventListener('click', () => addCardPopup.open());
+
+// Profile Avatar Edit
+const avatarPopup = new PopupWithForm('#profile-image-modal', (formData) => {
+  const avatarUrl = formData.image;
+
+  if (!avatarUrl.trim()) {
+    alert('Please provide a valid image URL.');
+    return Promise.reject('Invalid URL');
+  }
+
+  avatarPopup.renderLoading(true);
+  return api
+    .updateProfileImage(avatarUrl)
+    .then((updatedData) => {
+      userInfo.setAvatar(updatedData.avatar);
+      avatarPopup.close();
+    })
+    .catch((err) => {
+      console.error(`Error updating avatar: ${err}`);
+      alert('Failed to update avatar. Please try again.');
+    })
+    .finally(() => avatarPopup.renderLoading(false));
+});
+avatarPopup.setEventListeners();
+
+profileImageEditButton?.addEventListener('click', () => avatarPopup.open());
+
+// Create a new card
+const createCard = (cardData) => {
+  const card = new Card(
+    cardData,
+    '#card-template',
+    (name, link) => {
+      imagePopup.open({ name, link });
+    },
+    (cardId, cardElement) => {
+      confirmDeletePopup.open(cardId, cardElement);
+    },
+    (cardId) => {
+      const isLiked = cardData.likes.some(
+        (like) => like._id === userInfo.getUserInfo()._id
+      );
+      return isLiked ? api.dislikeCard(cardId) : api.likeCard(cardId);
+    }
+  );
+  return card.getView();
+};
+
+// Enable form validation
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll('form'));
   formList.forEach((formElement) => {
@@ -41,105 +191,3 @@ const enableValidation = (config) => {
 };
 
 enableValidation(settings);
-
-// Create an instance of UserInfo
-const userInfo = new UserInfo({
-  nameSelector: '#profile-title',
-  jobSelector: '#profile-description',
-});
-
-// Create an instance of PopupWithForm for the profile edit form
-const profileFormPopup = new PopupWithForm('#profile-edit-modal', (formData) => {
-  userInfo.setUserInfo({ name: formData.title, job: formData.description });
-  profileFormPopup.close();  // Close the popup after submission
-});
-profileFormPopup.setEventListeners();
-
-// Handle opening the profile edit popup with pre-filled current user data
-profileEditButton.addEventListener('click', () => {
-  const currentUserInfo = userInfo.getUserInfo();
-  document.querySelector('#profile-title-input').value = currentUserInfo.name;
-  document.querySelector('#profile-description-input').value = currentUserInfo.job;
-  profileFormPopup.open();
-});
-
-// Create an instance of PopupWithImage for the image popup
-const imagePopup = new PopupWithImage('#image-preview-modal');
-imagePopup.setEventListeners();
-
-// Handle image click to open the image popup
-const handleImageClick = (name, link) => {
-  imagePopup.open({ name, link });
-};
-
-// Initialize the delete confirmation modal
-const modalConfirmDelete = new ModalConfirmDelete('#confirm-delete-modal', {
-  handleFormSubmit: (cardId, cardElement) => {
-    // Perform deletion logic here (e.g., API call)
-    cardElement.remove();
-    modalConfirmDelete.close();
-  },
-});
-modalConfirmDelete.setEventListeners();
-
-// Create and render cards
-const createCard = (cardData) => {
-  console.log("Creating card with data:", cardData); // Log cardData to check if the image URL is correct
-
-  const card = new Card(
-    cardData,
-    '#card-template',
-    handleImageClick,
-    (cardId, cardElement) => {
-      modalConfirmDelete.open(cardId, cardElement);
-    }
-  );
-
-  return card.getView();
-};
-
-const cardSection = new Section({
-  items: initialCards,
-  renderer: (cardData) => {
-    const cardElement = createCard(cardData);
-    cardSection.addItem(cardElement);
-  }
-}, '.cards__list');
-
-cardSection.renderItems();
-
-// Create an instance of PopupWithForm for the add card form
-const addPlaceFormPopup = new PopupWithForm('#add-place-modal', (formData) => {
-  const cardData = { name: formData.title, link: formData.image };
-
-  // Prevent adding a card if the fields are empty or invalid
-  if (!cardData.name.trim() || !cardData.link.trim()) {
-    alert('Please fill out both the name and image URL fields.');
-    return;
-  }
-
-  console.log("Form submitted with data:", cardData); // Log formData to ensure valid data
-
-  const newCard = createCard(cardData);
-  cardSection.addItem(newCard);
-  addPlaceFormPopup.close();  // Close the popup after submission
-});
-addPlaceFormPopup.setEventListeners();
-
-// Handle opening the add card popup
-addNewCardButton.addEventListener('click', () => {
-  addPlaceFormPopup.open();
-});
-
-const profileImagePopup = new ModalConfirmDelete('#profile-image-modal', {
-  handleFormSubmit: () => {
-    console.log('Profile image updated');
-    profileImagePopup.close();
-  },
-});
-
-profileImagePopup.setEventListeners();
-
-profileImageEditButton.addEventListener('click', () => {
-  profileImagePopup.open();
-})

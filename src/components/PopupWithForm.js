@@ -1,4 +1,3 @@
-// components/PopupWithForm.js
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
@@ -20,18 +19,21 @@ export default class PopupWithForm extends Popup {
     return formValues;
   }
 
-  // Overriding the open method to reset the form
-  open() {
-    super.open();
-    this._formElement.reset();
+  // Method to set values to the form inputs
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name] || ''; // Populate inputs with corresponding values or default to empty
+    });
   }
 
   // Method to render loading state for form submission
   renderLoading(isLoading, loadingText = 'Saving...') {
     if (isLoading) {
       this._submitButton.textContent = loadingText;
+      this._submitButton.disabled = true; // Disable the button during loading
     } else {
       this._submitButton.textContent = this._defaultSubmitButtonText;
+      this._submitButton.disabled = false; // Re-enable the button after loading
     }
   }
 
@@ -40,10 +42,14 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._formElement.addEventListener('submit', (event) => {
       event.preventDefault();
+      const inputValues = this._getInputValues();
+
       this.renderLoading(true); // Show loading state when form is submitted
-      this._handleFormSubmit(this._getInputValues())
+
+      // Call the form submit handler and ensure it returns a promise
+      this._handleFormSubmit(inputValues)
         .then(() => {
-          this.close();  // Close the form popup after successful submission
+          this.close(); // Close the form popup after successful submission
         })
         .catch((err) => {
           console.error(`Form submission error: ${err}`);
