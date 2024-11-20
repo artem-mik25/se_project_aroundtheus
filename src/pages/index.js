@@ -173,9 +173,7 @@ const createCard = (cardData) => {
       confirmDeletePopup.open(cardId, cardElement);
     },
     (cardId) => {
-      const isLiked = cardData.likes.some(
-        (like) => like._id === userInfo.getUserInfo()._id
-      );
+      const isLiked = cardData.isLiked;
       return isLiked ? api.dislikeCard(cardId) : api.likeCard(cardId);
     }
   );

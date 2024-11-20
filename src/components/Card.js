@@ -10,9 +10,9 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
-    this._likes = data.likes || [];
+    this._isLiked = data.isLiked || false; // Use isLiked property for like state
     this._ownerId = data.ownerId || null; // Owner ID for delete button visibility
-    this._currentUserId = data.currentUserId || null; // Current user ID to check for likes
+    this._currentUserId = data.currentUserId || null; // Current user ID to check for ownership
     this._cardSelector = cardSelector;
 
     // Callbacks
@@ -23,7 +23,6 @@ export default class Card {
     // DOM Elements
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector('.card__like-button');
-    this._likeCounter = this._element.querySelector('.card__like-count');
     this._cardImage = this._element.querySelector('.card__image');
     this._deleteButton = this._element.querySelector('.card__delete-button');
     this._cardTitle = this._element.querySelector('.card__title');
@@ -65,11 +64,11 @@ export default class Card {
     });
   }
 
-  // Toggle the like state and update the counter
+  // Toggle the like state
   _handleLikeButton() {
-    this._handleLikeToggle(this._cardId)
-      .then((updatedLikes) => {
-        this._likes = updatedLikes; // Update likes array
+    this._handleLikeToggle(this._cardId, this._isLiked)
+      .then((updatedIsLiked) => {
+        this._isLiked = updatedIsLiked; // Update like state
         this._updateLikeState();
       })
       .catch((err) => {
@@ -77,15 +76,9 @@ export default class Card {
       });
   }
 
-  // Update the like button state and like counter
+  // Update the like button state
   _updateLikeState() {
-    const isLiked = this._likes.some((user) => user._id === this._currentUserId);
-    this._likeButton.classList.toggle('liked', isLiked);
-
-    // Update the like counter if it exists in the DOM
-    if (this._likeCounter) {
-      this._likeCounter.textContent = this._likes.length || 0;
-    }
+    this._likeButton.classList.toggle('liked', this._isLiked);
   }
 
   // Check if the delete button should be visible
@@ -100,11 +93,6 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
-
-    // Update the like counter if it exists
-    if (this._likeCounter) {
-      this._likeCounter.textContent = this._likes.length || 0;
-    }
 
     return this._element;
   }

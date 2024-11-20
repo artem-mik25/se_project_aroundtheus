@@ -4,6 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
+  // Private method to check the response and return JSON or throw an error
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -11,6 +12,7 @@ export default class Api {
     return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
   }
 
+  // Fetch user information
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
       .then(this._checkResponse)
@@ -20,6 +22,7 @@ export default class Api {
       });
   }
 
+  // Update user profile information
   updateUserInfo({ name, job }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -33,7 +36,12 @@ export default class Api {
       });
   }
 
+  // Update profile image
   updateProfileImage(avatarUrl) {
+    if (!avatarUrl.trim()) {
+      return Promise.reject('Error: Avatar URL is required.');
+    }
+
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -46,6 +54,7 @@ export default class Api {
       });
   }
 
+  // Fetch initial cards
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
       .then(this._checkResponse)
@@ -55,7 +64,12 @@ export default class Api {
       });
   }
 
+  // Add a new card
   addCard({ name, link }) {
+    if (!name || !link) {
+      return Promise.reject('Error: Both name and link are required to add a card.');
+    }
+
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -68,7 +82,12 @@ export default class Api {
       });
   }
 
+  // Delete a card
   deleteCard(cardId) {
+    if (!cardId) {
+      return Promise.reject('Error: Card ID is required to delete a card.');
+    }
+
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
@@ -80,21 +99,39 @@ export default class Api {
       });
   }
 
+  // Like a card
   likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    if (!cardId) {
+      return Promise.reject('Error: Card ID is required to like a card.');
+    }
+
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
       .then(this._checkResponse)
-      .then((card) => card.likes);
+      .then((data) => data.isLiked) // Return isLiked status
+      .catch((err) => {
+        console.error('Error liking card:', err);
+        throw err;
+      });
   }
 
+  // Dislike a card
   dislikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    if (!cardId) {
+      return Promise.reject('Error: Card ID is required to dislike a card.');
+    }
+
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })
       .then(this._checkResponse)
-      .then((card) => card.likes);
+      .then((data) => data.isLiked) // Return updated isLiked status
+      .catch((err) => {
+        console.error('Error disliking card:', err);
+        throw err;
+      });
   }
 }
