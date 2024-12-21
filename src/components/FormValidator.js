@@ -1,3 +1,4 @@
+// components/FormValidator.js
 export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
@@ -7,39 +8,25 @@ export default class FormValidator {
   }
 
   _showInputError(inputElement) {
-    if (!inputElement.id) {
-      console.warn('Input element is missing an "id" attribute. Skipping validation for this input.');
+    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    if (!errorElement) {
+      console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
     }
-
-    let errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
-
-    // Dynamically create the error element if missing
-    if (!errorElement) {
-      console.warn(`Error element for input "${inputElement.id}" not found. Creating it dynamically.`);
-      errorElement = document.createElement('span');
-      errorElement.id = `${inputElement.id}-error`;
-      errorElement.classList.add(this._config.errorClass);
-      inputElement.insertAdjacentElement('afterend', errorElement);
-    }
-
     inputElement.classList.add(this._config.inputErrorClass);
     errorElement.textContent = inputElement.validationMessage;
     errorElement.classList.add(this._config.errorClass);
   }
 
   _hideInputError(inputElement) {
-    if (!inputElement.id) {
-      console.warn('Input element is missing an "id" attribute. Skipping error hiding for this input.');
+    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    if (!errorElement) {
+      console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
     }
-
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
-    if (errorElement) {
-      inputElement.classList.remove(this._config.inputErrorClass);
-      errorElement.textContent = '';
-      errorElement.classList.remove(this._config.errorClass);
-    }
+    inputElement.classList.remove(this._config.inputErrorClass);
+    errorElement.textContent = '';
+    errorElement.classList.remove(this._config.errorClass);
   }
 
   _checkInputValidity(inputElement) {
