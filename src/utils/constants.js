@@ -1,56 +1,42 @@
-import yosemite from '../images/yosemite.jpg';
-import lakeLouise from '../images/lake-louise.jpg';
-import baldMountains from '../images/bald-mountains.jpg';
-import latemar from '../images/latemar.jpg';
-import vanoise from '../images/vanoise.jpg';
-import lago from '../images/lago.jpg';
+// utils/constants.js
 
 export const initialCards = [
   {
     _id: '1',
     name: 'Yosemite Valley',
-    link: yosemite,
+    link: require('../images/yosemite.jpg'),
   },
   {
     _id: '2',
     name: 'Lake Louise',
-    link: lakeLouise,
+    link: require('../images/lake-louise.jpg'),
   },
   {
     _id: '3',
     name: 'Bald Mountains',
-    link: baldMountains,
+    link: require('../images/bald-mountains.jpg'),
   },
   {
     _id: '4',
     name: 'Latemar',
-    link: latemar,
+    link: require('../images/latemar.jpg'),
   },
   {
     _id: '5',
     name: 'Vanoise National Park',
-    link: vanoise,
+    link: require('../images/vanoise.jpg'),
   },
   {
     _id: '6',
     name: 'Lago di Braies',
-    link: lago,
+    link: require('../images/lago.jpg'),
   },
 ];
 
 export const settings = {
-  // Form input field selector
   inputSelector: '.modal__input',
-
-  // Submit button selector
   submitButtonSelector: '.modal__button',
-
-  // Class for a disabled submit button
   inactiveButtonClass: 'modal__button_disabled',
-
-  // Class for an input field with an error
   inputErrorClass: 'modal__input_type_error',
-
-  // Class to display error messages
   errorClass: 'modal__error_visible',
 };

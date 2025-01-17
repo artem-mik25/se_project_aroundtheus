@@ -1,10 +1,11 @@
+// components/UserInfo.js
+
 export default class UserInfo {
   constructor({ nameSelector, jobSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector);
     this._jobElement = document.querySelector(jobSelector);
     this._avatarElement = document.querySelector(avatarSelector);
 
-    // Validate DOM elements
     if (!this._nameElement) {
       throw new Error(`UserInfo: Element with selector "${nameSelector}" not found`);
     }
@@ -16,7 +17,6 @@ export default class UserInfo {
     }
   }
 
-  // Get the current user info from the DOM
   getUserInfo() {
     return {
       name: this._nameElement.textContent.trim(),
@@ -25,8 +25,7 @@ export default class UserInfo {
     };
   }
 
-  // Update user info in the DOM
-  setUserInfo({ name, job }) {
+  setUserInfo({ name, job, avatar }) {
     if (typeof name === 'string' && name.trim()) {
       this._nameElement.textContent = name.trim();
     } else if (name !== undefined) {
@@ -38,14 +37,12 @@ export default class UserInfo {
     } else if (job !== undefined) {
       console.warn('UserInfo: Invalid "job" provided');
     }
-  }
 
-  // Update the user's avatar in the DOM
-  setAvatar(avatarUrl) {
-    if (typeof avatarUrl === 'string' && avatarUrl.trim()) {
-      this._avatarElement.src = avatarUrl.trim();
-    } else {
-      console.warn('UserInfo: Invalid "avatarUrl" provided');
+    // If an avatar URL is provided, set it
+    if (typeof avatar === 'string' && avatar.trim()) {
+      this._avatarElement.src = avatar.trim();
+    } else if (avatar !== undefined) {
+      console.warn('UserInfo: Invalid "avatar" provided');
     }
   }
 }

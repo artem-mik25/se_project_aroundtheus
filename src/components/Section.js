@@ -1,3 +1,5 @@
+// components/Section.js
+
 export default class Section {
   constructor({ items = [], renderer }, containerSelector) {
     this._renderedItems = items; // Default to an empty array if no items are provided

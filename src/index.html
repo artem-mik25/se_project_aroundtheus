@@ -18,6 +18,7 @@
           src="<%=require('./images/AroundTheUS.svg')%>"
         />
       </header>
+
       <main class="content">
         <!-- Profile Section -->
         <section class="profile page__section">
@@ -34,6 +35,7 @@
               aria-label="Edit profile picture"
             ></button>
           </div>
+
           <div class="profile__info">
             <div class="profile__main">
               <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
@@ -46,6 +48,7 @@
             </div>
             <p class="profile__description" id="profile-description">Explorer</p>
           </div>
+
           <button
             class="profile__add-button"
             id="profile-add-button"
@@ -61,8 +64,11 @@
           </ul>
         </section>
       </main>
+
       <footer class="footer page__section">
-        <p class="footer__copyright">© 2024 Around The U.S.</p>
+        <p class="footer__copyright">
+          © 2024 Around The U.S.
+        </p>
       </footer>
     </div>
 
@@ -222,7 +228,7 @@
               type="url"
               name="image"
               placeholder="Image URL"
-              id="profile-image-input" <!-- Added missing id here -->
+              id="profile-image-input"
               required
             />
             <span

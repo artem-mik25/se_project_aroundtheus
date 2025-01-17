@@ -1,3 +1,5 @@
+// index.js (or src/pages/index.js)
+
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -9,7 +11,7 @@ import Api from '../components/Api.js';
 import '../pages/index.css';
 import { settings } from '../utils/constants.js';
 
-// Initialize API
+// 1) Initialize API
 const api = new Api({
   baseUrl: 'https://around-api.en.tripleten-services.com/v1',
   headers: {
@@ -18,32 +20,34 @@ const api = new Api({
   },
 });
 
-// Initialize User Info
+// 2) Initialize UserInfo
 const userInfo = new UserInfo({
   nameSelector: '#profile-title',
   jobSelector: '#profile-description',
   avatarSelector: '.profile__image',
 });
 
-// Validate DOM elements
+// 3) DOM Elements
 const profileEditButton = document.querySelector('#profile__edit-button');
 const addNewCardButton = document.querySelector('#profile-add-button');
 const profileImageEditButton = document.querySelector('#profile-image-edit');
 
-if (!profileEditButton || !addNewCardButton || !profileImageEditButton) {
-  console.error('Error: One or more profile buttons not found in the DOM');
-}
+// 4) Popups
 
-// Initialize Popups
+// Image preview popup
 const imagePopup = new PopupWithImage('#image-preview-modal');
 imagePopup.setEventListeners();
 
+// Profile edit popup
 const profilePopup = new PopupWithForm('#profile-edit-modal', (formData) => {
   profilePopup.renderLoading(true);
   return api
     .updateUserInfo({ name: formData.title, job: formData.description })
     .then((updatedData) => {
-      userInfo.setUserInfo({ name: updatedData.name, job: updatedData.about });
+      userInfo.setUserInfo({
+        name: updatedData.name,
+        job: updatedData.about,
+      });
       profilePopup.close();
     })
     .catch((err) => {
@@ -54,6 +58,7 @@ const profilePopup = new PopupWithForm('#profile-edit-modal', (formData) => {
 });
 profilePopup.setEventListeners();
 
+// “Add place” popup
 const addCardPopup = new PopupWithForm('#add-place-modal', (formData) => {
   addCardPopup.renderLoading(true);
   const cardData = { name: formData.title, link: formData.image };
@@ -61,6 +66,9 @@ const addCardPopup = new PopupWithForm('#add-place-modal', (formData) => {
   return api
     .addCard(cardData)
     .then((newCard) => {
+      if (typeof newCard.isLiked !== 'boolean') {
+        newCard.isLiked = false;
+      }
       const cardElement = createCard(newCard);
       cardSection.addItem(cardElement);
       addCardPopup.close();
@@ -73,6 +81,7 @@ const addCardPopup = new PopupWithForm('#add-place-modal', (formData) => {
 });
 addCardPopup.setEventListeners();
 
+// Delete confirmation popup
 const confirmDeletePopup = new ModalConfirmDelete('#confirm-delete-modal', {
   handleFormSubmit: (cardId, cardElement) => {
     confirmDeletePopup.renderLoading(true);
@@ -91,64 +100,22 @@ const confirmDeletePopup = new ModalConfirmDelete('#confirm-delete-modal', {
 });
 confirmDeletePopup.setEventListeners();
 
-// Initialize Card Section
-const cardSection = new Section(
-  {
-    renderer: (cardData) => {
-      const cardElement = createCard(cardData);
-      cardSection.addItem(cardElement);
-    },
-  },
-  '.cards__list'
-);
-
-// Fetch and render user info and initial cards
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([userData, cardsData]) => {
-    if (userData) {
-      userInfo.setUserInfo({ name: userData.name, job: userData.about });
-      userInfo.setAvatar(userData.avatar);
-    } else {
-      console.warn('User data is not available');
-    }
-
-    if (Array.isArray(cardsData)) {
-      cardSection.setItems(cardsData);
-    } else {
-      console.warn('Cards data is not an array:', cardsData);
-    }
-  })
-  .catch((err) => {
-    console.error(`Error fetching data: ${err}`);
-  });
-
-// Profile Edit Button
-profileEditButton?.addEventListener('click', () => {
-  const currentUserInfo = userInfo.getUserInfo();
-  profilePopup.setInputValues({
-    title: currentUserInfo.name,
-    description: currentUserInfo.job,
-  });
-  profilePopup.open();
-});
-
-// Add Card Button
-addNewCardButton?.addEventListener('click', () => addCardPopup.open());
-
-// Profile Avatar Edit
+// Avatar edit popup
 const avatarPopup = new PopupWithForm('#profile-image-modal', (formData) => {
-  const avatarUrl = formData.image;
-
-  if (!avatarUrl.trim()) {
+  const avatarUrl = formData.image.trim();
+  if (!avatarUrl) {
     alert('Please provide a valid image URL.');
     return Promise.reject('Invalid URL');
   }
-
   avatarPopup.renderLoading(true);
   return api
     .updateProfileImage(avatarUrl)
     .then((updatedData) => {
-      userInfo.setAvatar(updatedData.avatar);
+      userInfo.setUserInfo({
+        name: updatedData.name,
+        job: updatedData.about,
+        avatar: updatedData.avatar, // ensure the server’s response has .avatar
+      });
       avatarPopup.close();
     })
     .catch((err) => {
@@ -159,10 +126,61 @@ const avatarPopup = new PopupWithForm('#profile-image-modal', (formData) => {
 });
 avatarPopup.setEventListeners();
 
-profileImageEditButton?.addEventListener('click', () => avatarPopup.open());
+// 5) Section for Cards
+const cardSection = new Section(
+  {
+    items: [],
+    renderer: (cardData) => {
+      if (typeof cardData.isLiked !== 'boolean') {
+        cardData.isLiked = false;
+      }
+      const cardElement = createCard(cardData);
+      cardSection.addItem(cardElement);
+    },
+  },
+  '.cards__list'
+);
 
-// Create a new card
-const createCard = (cardData) => {
+// 6) Retrieve Data from Server
+let currentUserId = null;
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardsData]) => {
+    if (userData) {
+      currentUserId = userData._id;
+      userInfo.setUserInfo({
+        name: userData.name,
+        job: userData.about,
+        avatar: userData.avatar,
+      });
+    } else {
+      console.warn('No user data received');
+    }
+
+    if (Array.isArray(cardsData)) {
+      cardsData.forEach((cardObj) => {
+        if (typeof cardObj.isLiked !== 'boolean') {
+          cardObj.isLiked = false;
+        }
+      });
+
+      cardSection._renderedItems = cardsData;
+      cardSection.renderItems();
+    } else {
+      console.warn('Cards data is not an array:', cardsData);
+    }
+  })
+  .catch((err) => {
+    console.error(`Error fetching data: ${err}`);
+  });
+
+// 7) Create Card Function
+function createCard(cardData) {
+  if (typeof cardData.isLiked !== 'boolean') {
+    cardData.isLiked = false;
+  }
+  cardData.currentUserId = currentUserId;
+
   const card = new Card(
     cardData,
     '#card-template',
@@ -172,20 +190,46 @@ const createCard = (cardData) => {
     (cardId, cardElement) => {
       confirmDeletePopup.open(cardId, cardElement);
     },
-    (cardId, isLiked) => {
-      return isLiked ? api.dislikeCard(cardId) : api.likeCard(cardId);
+    (cardId, wasLiked) => {
+      if (wasLiked) {
+        return api.dislikeCard(cardId).then((updatedCard) => {
+          return updatedCard.isLiked;
+        });
+      } else {
+        return api.likeCard(cardId).then((updatedCard) => {
+          return updatedCard.isLiked;
+        });
+      }
     }
   );
   return card.getView();
-};
+}
 
-// Enable form validation
-const enableValidation = (config) => {
+// 8) Hook Up Buttons
+profileEditButton?.addEventListener('click', () => {
+  const { name, job } = userInfo.getUserInfo();
+  profilePopup.setInputValues({
+    title: name,
+    description: job,
+  });
+  profilePopup.open();
+});
+
+addNewCardButton?.addEventListener('click', () => {
+  addCardPopup.open();
+});
+
+profileImageEditButton?.addEventListener('click', () => {
+  avatarPopup.open();
+});
+
+// 9) Enable Form Validation
+function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll('form'));
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement);
     validator.enableValidation();
   });
-};
+}
 
 enableValidation(settings);
