@@ -190,6 +190,7 @@ function createCard(cardData) {
     (cardId, cardElement) => {
       confirmDeletePopup.open(cardId, cardElement);
     },
+<<<<<<< HEAD
     (cardId, wasLiked) => {
       if (wasLiked) {
         return api.dislikeCard(cardId).then((updatedCard) => {
@@ -200,6 +201,11 @@ function createCard(cardData) {
           return updatedCard.isLiked;
         });
       }
+=======
+    (cardId) => {
+      const isLiked = cardData.isLiked;
+      return isLiked ? api.dislikeCard(cardId) : api.likeCard(cardId);
+>>>>>>> origin/project-9
     }
   );
   return card.getView();
