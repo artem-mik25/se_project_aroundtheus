@@ -1,8 +1,5 @@
 // components/FormValidator.js
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/project-9
 export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
@@ -16,13 +13,9 @@ export default class FormValidator {
   }
 
   _showInputError(inputElement) {
-<<<<<<< HEAD
     const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
-=======
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
->>>>>>> origin/project-9
     if (!errorElement) {
       console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
@@ -33,13 +26,9 @@ export default class FormValidator {
   }
 
   _hideInputError(inputElement) {
-<<<<<<< HEAD
     const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
-=======
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
->>>>>>> origin/project-9
     if (!errorElement) {
       console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
@@ -73,6 +62,7 @@ export default class FormValidator {
 
   _setEventListeners() {
     this._toggleButtonState();
+
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);

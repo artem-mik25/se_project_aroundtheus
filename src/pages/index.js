@@ -114,7 +114,7 @@ const avatarPopup = new PopupWithForm('#profile-image-modal', (formData) => {
       userInfo.setUserInfo({
         name: updatedData.name,
         job: updatedData.about,
-        avatar: updatedData.avatar, // ensure the server’s response has .avatar
+        avatar: updatedData.avatar, // ensures the server’s response has .avatar
       });
       avatarPopup.close();
     })
@@ -184,14 +184,18 @@ function createCard(cardData) {
   const card = new Card(
     cardData,
     '#card-template',
+    // handleImageClick
     (name, link) => {
       imagePopup.open({ name, link });
     },
+    // handleDeleteClick
     (cardId, cardElement) => {
       confirmDeletePopup.open(cardId, cardElement);
     },
-<<<<<<< HEAD
+    // handleLikeToggle
     (cardId, wasLiked) => {
+      // If wasLiked is true, we do .dislikeCard
+      // If wasLiked is false, we do .likeCard
       if (wasLiked) {
         return api.dislikeCard(cardId).then((updatedCard) => {
           return updatedCard.isLiked;
@@ -201,11 +205,6 @@ function createCard(cardData) {
           return updatedCard.isLiked;
         });
       }
-=======
-    (cardId) => {
-      const isLiked = cardData.isLiked;
-      return isLiked ? api.dislikeCard(cardId) : api.likeCard(cardId);
->>>>>>> origin/project-9
     }
   );
   return card.getView();
