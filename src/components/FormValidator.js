@@ -1,14 +1,21 @@
 // components/FormValidator.js
+
 export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
     this._formElement = formElement;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._config.submitButtonSelector);
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._config.inputSelector)
+    );
+    this._buttonElement = this._formElement.querySelector(
+      this._config.submitButtonSelector
+    );
   }
 
   _showInputError(inputElement) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.id}-error`
+    );
     if (!errorElement) {
       console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
@@ -19,7 +26,9 @@ export default class FormValidator {
   }
 
   _hideInputError(inputElement) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.id}-error`
+    );
     if (!errorElement) {
       console.error('Error Element Not Found:', `#${inputElement.id}-error`);
       return;
@@ -38,7 +47,7 @@ export default class FormValidator {
   }
 
   _hasInvalidInput() {
-    return this._inputList.some(inputElement => !inputElement.validity.valid);
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
 
   _toggleButtonState() {
@@ -53,7 +62,8 @@ export default class FormValidator {
 
   _setEventListeners() {
     this._toggleButtonState();
-    this._inputList.forEach(inputElement => {
+
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState();
@@ -61,7 +71,7 @@ export default class FormValidator {
     });
 
     this._formElement.addEventListener('reset', () => {
-      this._inputList.forEach(inputElement => {
+      this._inputList.forEach((inputElement) => {
         this._hideInputError(inputElement);
       });
       setTimeout(() => {

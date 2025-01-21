@@ -35,12 +35,10 @@
   height: auto; /* Ensure height auto to accommodate content */
 }
 
-.modal__container--large {
-  width: 600px; /* Larger width for specific modals if needed */
-}
-
-.modal__container--small {
-  width: 300px; /* Smaller width for specific modals if needed */
+/* Added style for the delete confirmation modal */
+.modal__container--confirm {
+  width: 300px; /* Adjust width for the confirmation modal */
+  padding: 24px;
 }
 
 .modal__close {
@@ -74,10 +72,21 @@
   text-align: left;
 }
 
+/* Adjust heading for the confirmation modal */
+.modal__container--confirm .modal__heading {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .modal__form {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+/* Center the button in the confirmation modal */
+.modal__container--confirm .modal__form {
+  align-items: center;
 }
 
 .modal__label {
@@ -119,6 +128,12 @@
   text-align: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
+}
+
+/* Adjust button styles for the confirmation modal */
+.modal__container--confirm .modal__button {
+  width: 120px;
+  margin: 0;
 }
 
 .modal__button:hover {
@@ -229,6 +244,16 @@
   /* Ensure modal height is enough for mobile view */
   .modal__container {
     min-height: 322px; /* Match the height in the design */
+  }
+
+  /* Adjust confirmation modal for smaller screens */
+  .modal__container--confirm {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal__container--confirm .modal__button {
+    width: 100%;
   }
 }
 

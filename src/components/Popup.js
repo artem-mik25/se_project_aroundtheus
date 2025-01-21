@@ -1,36 +1,45 @@
 // components/Popup.js
+
 export default class Popup {
-    constructor(popupSelector) {
-      this._popup = document.querySelector(popupSelector);
-      this._handleEscClose = this._handleEscClose.bind(this); // Bind to ensure `this` references the class
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+
+    if (!this._popup) {
+      throw new Error(`Popup: Element with selector "${popupSelector}" not found`);
     }
 
-    // Public method to open the popup
-    open() {
-      this._popup.classList.add('modal_opened');
-      document.addEventListener('keydown', this._handleEscClose); // Attach Esc key event
-    }
+    this._handleEscClose = this._handleEscClose.bind(this); // Bind context
+  }
 
-    // Public method to close the popup
-    close() {
-      this._popup.classList.remove('modal_opened');
-      document.removeEventListener('keydown', this._handleEscClose); // Detach Esc key event
-    }
+  // Open the popup
+  open() {
+    this._popup.classList.add('modal_opened');
+    document.addEventListener('keydown', this._handleEscClose);
+  }
 
-    // Private method to close popup on Esc key press
-    _handleEscClose(event) {
-      if (event.key === 'Escape') {
-        this.close();
-      }
-    }
+  // Close the popup
+  close() {
+    this._popup.classList.remove('modal_opened');
+    document.removeEventListener('keydown', this._handleEscClose);
+  }
 
-    // Public method to set event listeners (closing on click and close button)
-    setEventListeners() {
-      // Close the popup when clicking on the close button or outside the form
-      this._popup.addEventListener('mousedown', (event) => {
-        if (event.target.classList.contains('modal__close') || event.target.classList.contains('modal_opened')) {
-          this.close();
-        }
-      });
+  // Private method to close popup on Escape key
+  _handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      this.close();
     }
   }
+
+  // Set event listeners for closing the popup
+  setEventListeners() {
+    this._popup.addEventListener('mousedown', (evt) => {
+      // Close on overlay click or close button click
+      if (
+        evt.target.classList.contains('modal__close') ||
+        evt.target === this._popup
+      ) {
+        this.close();
+      }
+    });
+  }
+}

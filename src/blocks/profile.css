@@ -17,6 +17,12 @@
   margin-bottom: 36px;
 }
 
+.profile__avatar-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
 .profile__image {
   width: 120px;
   height: 120px;
@@ -24,8 +30,61 @@
   border-radius: 50%;
   object-fit: cover;
   background-position: center;
+   background-image: url('../images/pen.svg');
 }
 
+.profile__image__wrap {
+  position: relative;
+}
+
+.profile__image__edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  visibility: hidden;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-position: center;
+  background-image: url('../images/pen.svg');
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.profile__image__wrap:hover .profile__image__edit {
+  visibility: visible;
+}
+
+
+.profile__avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.profile__avatar-container:hover .profile__avatar-overlay {
+  opacity: 1;
+}
+
+.profile__avatar-edit-icon {
+  width: 40px;
+  height: 40px;
+}
+
+/* Profile Titles and Description */
 .profile__title,
 .profile__description {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -36,17 +95,15 @@
 }
 
 .profile__title {
-  grid-area: title;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.1;
   margin-bottom: 14px;
   max-width: 200px;
-  margin-top: 0%;
+  margin-top: 0;
 }
 
 .profile__description {
-  grid-area: description;
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
@@ -55,6 +112,7 @@
   text-align: center;
 }
 
+/* Profile Buttons */
 .profile__edit-button,
 .profile__add-button {
   background: transparent;
@@ -63,7 +121,6 @@
 }
 
 .profile__edit-button {
-  grid-area: button;
   width: 18px;
   height: 18px;
   background-image: url('../images/pen.svg');
@@ -91,6 +148,7 @@
   background-size: 16px;
 }
 
+/* Media Queries for Larger Screens */
 @media screen and (min-width: 800px) {
   .profile {
     flex-direction: row;
@@ -129,4 +187,10 @@
     text-align: left;
     font-size: 18px;
   }
+
+  .profile__avatar-overlay {
+    width: 120px;
+    height: 120px;
+  }
 }
+
